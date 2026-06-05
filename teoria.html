@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Теория — LegalLinguoLab</title>
+  <link rel="stylesheet" href="shared.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Страница теории ── */
+    .teoria-hero {
+      background: var(--navy);
+      padding: 56px 0 40px;
+      text-align: center;
+    }
+    .teoria-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #fff;
+      margin: 0 0 10px;
+    }
+    .teoria-hero p {
+      font-family: 'Raleway', sans-serif;
+      color: rgba(255,255,255,0.7);
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    /* ── Вкладки ── */
+    .tabs-nav {
+      background: #fff;
+      border-bottom: 2px solid #eef0f4;
+      position: sticky;
+      top: 68px;
+      z-index: 100;
+    }
+    .tabs-nav ul {
+      list-style: none;
+      margin: 0 auto;
+      padding: 0;
+      max-width: 1100px;
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tabs-nav ul::-webkit-scrollbar { display: none; }
+    .tabs-nav li { flex-shrink: 0; }
+    .tabs-nav a {
+      display: block;
+      padding: 16px 22px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #666;
+      text-decoration: none;
+      border-bottom: 3px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .tabs-nav a:hover { color: var(--navy); }
+    .tabs-nav a.active {
+      color: var(--navy);
+      border-bottom-color: var(--gold);
+    }
+
+    /* ── Контент секций ── */
+    .section-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .tab-section {
+      display: none !important;
+      padding: 40px 0 60px;
+    }
+    .tab-section.active { display: block !important; }
+
+    /* ── Карточка темы ── */
+    .theme-card {
+      background: #fff;
+      border: 1px solid #e8eaf0;
+      border-radius: 12px;
+      padding: 32px 36px;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 12px rgba(13,31,60,0.06);
+    }
+    .theme-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+    .theme-num {
+      background: var(--navy);
+      color: var(--gold);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      min-width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .theme-meta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin: 0 0 6px;
+    }
+    .theme-meta p {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.88rem;
+      color: #777;
+      margin: 0;
+    }
+
+    /* ── Блок плана ── */
+    .plan-block {
+      background: #f7f8fc;
+      border-left: 4px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    .plan-block h3 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      margin: 0 0 10px;
+    }
+    .plan-block ol {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .plan-block li {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.9rem;
+      color: #444;
+      margin-bottom: 5px;
+      line-height: 1.5;
+    }
+
+    /* ── Цель и задачи ── */
+    .goals-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 640px) {
+      .goals-grid { grid-template-columns: 1fr; }
+    }
+    .goal-box {
+      background: #fff;
+      border: 1px solid #e8eaf0;
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .goal-box h4 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--navy);
+      margin: 0 0 10px;
+    }
+    .goal-box p, .goal-box li {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.88rem;
+      color: #555;
+      margin: 0;
+      line-height: 1.55;
+    }
+    .goal-box ul {
+      margin: 0;
+      padding-left: 16px;
+    }
+    .goal-box li { margin-bottom: 5px; }
+
+    /* ── Кнопка PDF ── */
+    .pdf-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--navy);
+      color: #fff;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      cursor: pointer;
+      border: none;
+    }
+    .pdf-btn:hover {
+      background: #1a3260;
+      transform: translateY(-1px);
+    }
+    .pdf-btn svg { flex-shrink: 0; }
+
+    /* ── Литература ── */
+    .lit-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .lit-list li {
+      display: flex;
+      gap: 10px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.88rem;
+      color: #555;
+      padding: 9px 0;
+      border-bottom: 1px solid #f0f0f4;
+      line-height: 1.5;
+    }
+    .lit-list li:last-child { border-bottom: none; }
+    .lit-num {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.75rem;
+      min-width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── ТЕСТ ── */
+    #tab-test .theme-card { max-width: 820px; }
+
+    .test-progress {
+      height: 5px;
+      background: #eef0f4;
+      border-radius: 3px;
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+    .test-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--navy), var(--gold));
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+
+    .question-block {
+      display: none;
+    }
+    .question-block.active { display: block; }
+
+    .q-counter {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .q-text {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .options-list {
+      list-style: none;
+      margin: 0 0 24px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .option-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: #f7f8fc;
+      border: 2px solid #e8eaf0;
+      border-radius: 10px;
+      padding: 13px 16px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.93rem;
+      color: #444;
+      line-height: 1.5;
+    }
+    .option-item:hover {
+      border-color: var(--navy);
+      background: #f0f2f8;
+    }
+    .option-item.selected {
+      border-color: var(--navy);
+      background: #eef1f9;
+    }
+    .option-item.correct {
+      border-color: #27ae60;
+      background: #eafaf1;
+      color: #1e8449;
+    }
+    .option-item.wrong {
+      border-color: #e74c3c;
+      background: #fdedec;
+      color: #c0392b;
+    }
+    .option-letter {
+      background: var(--navy);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.78rem;
+      min-width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .option-item.correct .option-letter { background: #27ae60; }
+    .option-item.wrong .option-letter { background: #e74c3c; }
+
+    .q-feedback {
+      display: none;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .q-feedback.show { display: block; }
+    .q-feedback.ok { background: #eafaf1; color: #1e8449; border-left: 4px solid #27ae60; }
+    .q-feedback.err { background: #fdedec; color: #c0392b; border-left: 4px solid #e74c3c; }
+
+    .test-nav {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-check {
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-check:hover { background: #e8c97a; transform: translateY(-1px); }
+    .btn-check:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .btn-next {
+      background: var(--navy);
+      color: #fff;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: none;
+      transition: background 0.2s;
+    }
+    .btn-next:hover { background: #1a3260; }
+    .btn-next.visible { display: inline-block; }
+
+    /* ── Результат ── */
+    .test-result {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+    .test-result.show { display: block; }
+    .result-score {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: var(--navy);
+      margin: 0 0 6px;
+    }
+    .result-score span { color: var(--gold); }
+    .result-label {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 24px;
+    }
+    .result-grade {
+      display: inline-block;
+      padding: 10px 28px;
+      border-radius: 50px;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 28px;
+    }
+    .grade-5 { background: #eafaf1; color: #1e8449; border: 2px solid #27ae60; }
+    .grade-4 { background: #eef9fc; color: #0e6985; border: 2px solid #1a9cb5; }
+    .grade-3 { background: #fef9e7; color: #9a7d0a; border: 2px solid #d4ac0d; }
+    .grade-2 { background: #fdedec; color: #c0392b; border: 2px solid #e74c3c; }
+
+    /* ── Форма сохранения ── */
+    .save-form {
+      background: #f7f8fc;
+      border: 1px solid #e8eaf0;
+      border-radius: 10px;
+      padding: 24px;
+      margin-top: 20px;
+      text-align: left;
+    }
+    .save-form h3 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0 0 16px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    @media (max-width: 520px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+    .form-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #dde0e8;
+      border-radius: 8px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.9rem;
+      color: #333;
+      background: #fff;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-input:focus { border-color: var(--navy); }
+    .btn-save {
+      background: var(--navy);
+      color: #fff;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 11px 28px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+    }
+    .btn-save:hover { background: #1a3260; }
+    .btn-save:disabled { opacity: 0.6; cursor: not-allowed; }
+    .save-status {
+      text-align: center;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.9rem;
+      margin-top: 12px;
+      min-height: 22px;
+    }
+    .save-status.ok { color: #27ae60; }
+    .save-status.err { color: #e74c3c; }
+
+    /* ── Сброс теста ── */
+    .btn-retry {
+      background: transparent;
+      color: var(--navy);
+      font-family: 'Raleway', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 10px 20px;
+      border: 2px solid var(--navy);
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-retry:hover { background: var(--navy); color: #fff; }
+    /* ══════════════════════════════════════════
+       PDF MODAL
+    ══════════════════════════════════════════ */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,20,45,0.7);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 900px;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-bottom: 1px solid #e8eaf0;
+      flex-shrink: 0;
+    }
+    .modal-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .modal-dl {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-decoration: none;
+      padding: 5px 12px;
+      border: 1px solid #dde0e8;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .modal-dl:hover { background: #f0f2f8; }
+    .modal-close {
+      background: #f0f2f8;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 0.9rem;
+      cursor: pointer;
+      color: #555;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .modal-close:hover { background: #fdedec; color: #c0392b; }
+    .modal-frame {
+      flex: 1;
+      border: none;
+      width: 100%;
+    }
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--navy);
+      color: #fff;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.9rem;
+      padding: 12px 24px;
+      border-radius: 50px;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      z-index: 99999;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+<script>
+function switchTab(tabId) {
+  // DOM tayyor bo'lishini kutib ishlatamiz
+  if (!document.getElementById('tab-1')) {
+    document.addEventListener('DOMContentLoaded', function() { switchTab(tabId); });
+    return;
+  }
+  document.querySelectorAll('.tabs-nav a').forEach(function(l) { l.classList.remove('active'); });
+  document.querySelectorAll('.tab-section').forEach(function(s) { s.classList.remove('active'); });
+  var link = document.querySelector('.tabs-nav a[data-tab="' + tabId + '"]');
+  if (link) link.classList.add('active');
+  var section = document.getElementById(tabId);
+  if (section) section.classList.add('active');
+  if (tabId === 'tab-test' && typeof loadTest === 'function') { testInitialized = false; loadTest(); }
+}
+  // Sahifa yuklanganda agar hash=tab-test bo'lsa avtomatik yukla
+  window.addEventListener('load', function() {
+    if (window.location.hash === '#test' || window.location.search.includes('test')) {
+      switchTab('tab-test');
+    }
+  });
+</script>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img src="logo.jpg" alt="LegalLinguoLab">
+      <div>
+        <div class="logo-text">Legal<span>Linguo</span>Lab</div>
+        <span class="logo-sub">Образовательная платформа юридического языка</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="teoria.html" class="active">📚 Теория</a>
+      <a href="praktika.html">✍️ Практика</a>
+      <a href="kontrol.html">🎯 Контроль</a>
+      <a href="grades.html">📊 Оценки</a>
+      <a href="literatura.html">📖 Литература</a>
+    </nav>
+    <div id="navUserBlock"></div>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="teoria.html" class="active">📚 Теория</a>
+    <a href="praktika.html">✍️ Практика</a>
+    <a href="kontrol.html">🎯 Контроль</a>
+    <a href="grades.html">📊 Оценки</a>
+    <a href="literatura.html">📖 Литература</a>
+    <div id="mobileUserBlock"></div>
+  </div>
+</header>
+
+<!-- ═══ PDF MODAL (nav.js openPDF() учун) ═══ -->
+<div id="modalOverlay" class="modal-overlay" onclick="closePDF(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span id="modalTitle" class="modal-title"></span>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <a id="modalDlBtn" href="#" download class="modal-dl">&#11015; Скачать</a>
+        <button class="modal-close" onclick="closePDF(event)" aria-label="Закрыть">&#10005;</button>
+      </div>
+    </div>
+    <iframe id="modalFrame" class="modal-frame" src="" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="teoria-hero">
+  <div class="section-wrap">
+    <h1 class="page-header">Теоретический курс</h1>
+    <p>Язык и стиль процессуальных документов · 4 темы · Тестовые задания</p>
+  </div>
+</section>
+
+<!-- ═══ ВКЛАДКИ ═══ -->
+<nav class="tabs-nav">
+  <ul>
+    <li><a href="javascript:void(0)" class="active" data-tab="tab-1" onclick="switchTab('tab-1')">Тема 1</a></li>
+    <li><a href="javascript:void(0)" data-tab="tab-2" onclick="switchTab('tab-2')">Тема 2</a></li>
+    <li><a href="javascript:void(0)" data-tab="tab-3" onclick="switchTab('tab-3')">Тема 3</a></li>
+    <li><a href="javascript:void(0)" data-tab="tab-4" onclick="switchTab('tab-4')">Тема 4</a></li>
+    <li><a href="javascript:void(0)" data-tab="tab-test" onclick="switchTab('tab-test')">📝 Тест</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ КОНТЕНТ ═══ -->
+<main>
+  <div class="section-wrap">
+
+    <!-- ── ТЕМА 1 ── -->
+    <section id="tab-1" class="tab-section active">
+      <div class="theme-card">
+        <div class="theme-header">
+          <div class="theme-num">1</div>
+          <div class="theme-meta">
+            <h2>Процессуальные документы: общие положения</h2>
+            <p>Понятие, значение, виды и методика составления процессуальных документов</p>
+          </div>
+        </div>
+
+        <div class="plan-block">
+          <h3>План темы</h3>
+          <ol>
+            <li>Понятие и значение уголовно-процессуальных актов</li>
+            <li>Процессуальные документы: виды и классификация</li>
+            <li>Методика составления процессуальных документов</li>
+          </ol>
+        </div>
+
+        <div class="goals-grid">
+          <div class="goal-box">
+            <h4>Цель</h4>
+            <p>Формирование у студентов представления и знаний о процессуальных документах в уголовном судопроизводстве.</p>
+          </div>
+          <div class="goal-box">
+            <h4>Задачи</h4>
+            <ul>
+              <li>Ознакомить с основными понятиями по теме</li>
+              <li>Сформировать знания о процессуальном документе</li>
+              <li>Ознакомить с видами процессуальных документов</li>
+            </ul>
+          </div>
+        </div>
+
+        <a class="pdf-btn" onclick="openPDF('teoria/tema1.pdf', 'Тема 1. Общие положения')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+          Открыть лекцию (PDF)
+        </a>
+      </div>
+
+      <div class="theme-card">
+        <h4 style="font-family:'Raleway',sans-serif; font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--navy); margin:0 0 14px;">Литература</h4>
+        <ul class="lit-list">
+          <li><span class="lit-num">1</span>Пулатова У.Р. Практикум по составлению процессуальных документов. — Т.: ТГЮУ, 2023. — 143 с.</li>
+          <li><span class="lit-num">2</span>Воронцова Ю.А., Хорошко Е.Ю. Русский язык для юристов. — Белгород: БелЮИ МВД России, 2008. — 108 с.</li>
+          <li><span class="lit-num">3</span>Загорский Г.И., Качалов В.И. Процессуальные (судебные) акты в уголовном процессе. — М.: РАП, 2014. — 192 с.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── ТЕМА 2 ── -->
+    <section id="tab-2" class="tab-section">
+      <div class="theme-card">
+        <div class="theme-header">
+          <div class="theme-num">2</div>
+          <div class="theme-meta">
+            <h2>Содержание процессуальных документов</h2>
+            <p>Стилистические модели: документы-протоколы и документы-решения</p>
+          </div>
+        </div>
+
+        <div class="plan-block">
+          <h3>План темы</h3>
+          <ol>
+            <li>Основные понятия: содержание документа, типовое содержание, виды информации, реквизиты, композиционное членение, способы передачи информации</li>
+            <li>Стилистические модели: документы-протоколы, документы-решения</li>
+          </ol>
+        </div>
+
+        <div class="goals-grid">
+          <div class="goal-box">
+            <h4>Цель</h4>
+            <p>Формирование у студентов знаний о стилистических моделях процессуальных документов.</p>
+          </div>
+          <div class="goal-box">
+            <h4>Задачи</h4>
+            <ul>
+              <li>Ознакомить с основными понятиями по теме</li>
+              <li>Различать процессуальные документы</li>
+              <li>При составлении документов соблюдать языковые нормы</li>
+            </ul>
+          </div>
+        </div>
+
+        <a class="pdf-btn" onclick="openPDF('teoria/tema2.pdf', 'Тема 2. Содержание процессуальных документов')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+          Открыть лекцию (PDF)
+        </a>
+      </div>
+
+      <div class="theme-card">
+        <h4 style="font-family:'Raleway',sans-serif; font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--navy); margin:0 0 14px;">Литература</h4>
+        <ul class="lit-list">
+          <li><span class="lit-num">1</span>Пулатова У.Р. Практикум по составлению процессуальных документов. — Т.: ТГЮУ, 2023. — 143 с.</li>
+          <li><span class="lit-num">2</span>Губаева Т.В. Практический курс русского языка для юристов. — Казань: КГУ, 1986.</li>
+          <li><span class="lit-num">→</span><a href="https://elar.urfu.ru/bitstream/10995/44311/1/dais_2010_69.pdf" target="_blank" style="color:var(--navy);">elar.urfu.ru — электронный ресурс</a></li>
+          <li><span class="lit-num">→</span><a href="https://studfile.net/preview/5707546/page:22/" target="_blank" style="color:var(--navy);">studfile.net — электронный ресурс</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── ТЕМА 3 ── -->
+    <section id="tab-3" class="tab-section">
+      <div class="theme-card">
+        <div class="theme-header">
+          <div class="theme-num">3</div>
+          <div class="theme-meta">
+            <h2>Структура процессуальных документов</h2>
+            <p>Структура постановлений и протоколов</p>
+          </div>
+        </div>
+
+        <div class="plan-block">
+          <h3>План темы</h3>
+          <ol>
+            <li>Средства юридической техники</li>
+            <li>Структурирование материала в документах</li>
+          </ol>
+        </div>
+
+        <div class="goals-grid">
+          <div class="goal-box">
+            <h4>Цель</h4>
+            <p>Формирование профессиональных навыков составления процессуальных документов.</p>
+          </div>
+          <div class="goal-box">
+            <h4>Задачи</h4>
+            <ul>
+              <li>Сформировать представление о структуре постановлений и протоколов</li>
+              <li>Знать содержание композиционных частей документов</li>
+              <li>Уметь структурировать текст документа</li>
+              <li>Подбирать речевые конструкции, соблюдать стилистические нормы</li>
+            </ul>
+          </div>
+        </div>
+
+        <a class="pdf-btn" onclick="openPDF('teoria/tema3.pdf', 'Тема 3. Структура процессуальных документов')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+          Открыть лекцию (PDF)
+        </a>
+      </div>
+
+      <div class="theme-card">
+        <h4 style="font-family:'Raleway',sans-serif; font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--navy); margin:0 0 14px;">Литература</h4>
+        <ul class="lit-list">
+          <li><span class="lit-num">1</span>Воронцова Ю.А., Хорошко Е.Ю. Русский язык для юристов. — Белгород: БелЮИ МВД России, 2008. — 108 с.</li>
+          <li><span class="lit-num">2</span>Загорский Г.И., Качалов В.И. Процессуальные (судебные) акты в уголовном процессе. — М.: РАП, 2014.</li>
+          <li><span class="lit-num">3</span>Пулатова У.Р. Практикум по составлению процессуальных документов. — Т.: ТГЮУ, 2023. — 145 с.</li>
+          <li><span class="lit-num">4</span>Хидоятов Б.Б. и др. Процессуальные акты по уголовным делам: Досудебное производство. — Т.: ТГЮУ, 2018.</li>
+          <li><span class="lit-num">5</span>Маматкулова Х.У. и др. Процессуальные акты по уголовным делам (судебное производство). — Т.: ТГЮУ, 2019.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── ТЕМА 4 ── -->
+    <section id="tab-4" class="tab-section">
+      <div class="theme-card">
+        <div class="theme-header">
+          <div class="theme-num">4</div>
+          <div class="theme-meta">
+            <h2>Язык и стиль процессуальных документов</h2>
+            <p>Официально-деловой стиль речи. Законодательный подстиль</p>
+          </div>
+        </div>
+
+        <div class="plan-block">
+          <h3>План темы</h3>
+          <ol>
+            <li>Официально-деловой стиль речи (законодательный подстиль)</li>
+            <li>Язык и стиль процессуальных документов</li>
+          </ol>
+        </div>
+
+        <div class="goals-grid">
+          <div class="goal-box">
+            <h4>Цель</h4>
+            <p>Формирование теоретических знаний об особенностях языка процессуальных документов, официально-делового стиля речи.</p>
+          </div>
+          <div class="goal-box">
+            <h4>Задачи</h4>
+            <ul>
+              <li>Сформировать представление о языке процессуальных документов</li>
+              <li>Знать и соблюдать нормы литературного языка</li>
+              <li>Знать и различать подстили официально-делового стиля речи</li>
+            </ul>
+          </div>
+        </div>
+
+        <a class="pdf-btn" onclick="openPDF('teoria/tema4.pdf', 'Тема 4. Язык и стиль процессуальных документов')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+          Открыть лекцию (PDF)
+        </a>
+      </div>
+
+      <div class="theme-card">
+        <h4 style="font-family:'Raleway',sans-serif; font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--navy); margin:0 0 14px;">Литература</h4>
+        <ul class="lit-list">
+          <li><span class="lit-num">1</span>Загорский Г.И., Качалов В.И. Процессуальные (судебные) акты в уголовном процессе. — М.: РАП, 2014.</li>
+          <li><span class="lit-num">2</span>Стародубова Г.В. и др. Уголовно-процессуальные акты. — М.: Юрайт, 2022. — 477 с.</li>
+          <li><span class="lit-num">3</span>Воронцова Ю.А., Хорошко Е.Ю. Русский язык для юристов. — Белгород: БелЮИ МВД России, 2008.</li>
+          <li><span class="lit-num">4</span>Пулатова У.Р. Практикум по составлению процессуальных документов. — Т.: ТГЮУ, 2023. — 145 с.</li>
+          <li><span class="lit-num">→</span><a href="https://philolog.petrsu.ru/filolog/program/sni/stil-process-doc.pdf" target="_blank" style="color:var(--navy);">philolog.petrsu.ru — электронный ресурс</a></li>
+          <li><span class="lit-num">→</span><a href="https://lawbook.online/page/tertishikup/ist/ist-6--idz-ax225--nf-26.html" target="_blank" style="color:var(--navy);">lawbook.online — электронный ресурс</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         ТЕСТ
+    ══════════════════════════════════════════ -->
+    <section id="tab-test" class="tab-section">
+      <div class="theme-card">
+        <div class="theme-header">
+          <div class="theme-num" style="font-size:1.1rem;">📝</div>
+          <div class="theme-meta">
+            <h2>Тестовые задания по теории</h2>
+            <p>44 вопроса · Загружаются из базы данных · Результат сохраняется в журнал</p>
+          </div>
+        </div>
+
+        <!-- Прогресс -->
+        <div class="test-progress">
+          <div class="test-progress-bar" id="progressBar" style="width:5%"></div>
+        </div>
+
+        <!-- Вопросы -->
+        <div id="questionsContainer"></div>
+
+        <!-- Результат -->
+        <div class="test-result" id="testResult">
+          <div class="result-score" id="resultScore"></div>
+          <p class="result-label" id="resultLabel"></p>
+          <div class="result-grade" id="resultGrade"></div>
+
+          <!-- Форма сохранения -->
+          <div class="save-form">
+            <h3>Сохранить результат в журнал</h3>
+            <div class="form-row">
+              <input type="text" id="saveNameInput" class="form-input" placeholder="Ваше имя" />
+              <input type="text" id="saveGroupInput" class="form-input" placeholder="Группа" />
+            </div>
+            <button class="btn-save" id="btnSave" onclick="saveResult()">Сохранить результат</button>
+            <p class="save-status" id="saveStatus"></p>
+          </div>
+
+          <br>
+          <button class="btn-retry" onclick="retryTest()">↺ Пройти ещё раз</button>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /section-wrap -->
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer style="background:var(--navy); color:rgba(255,255,255,0.5); text-align:center; padding:28px 20px; font-family:'Raleway',sans-serif; font-size:0.82rem; margin-top:40px;">
+  © 2024 LegalLinguoLab · ТГЮУ · Пулатова Умида Рамазановна
+</footer>
+
+
+<script src="icons.js"></script>
+<script src="nav.js"></script>
+<script>
+/* ══════════════════════════════════════════
+   ВКЛАДКИ
+══════════════════════════════════════════ */
+function switchTab(tabId) {
+  document.querySelectorAll('.tabs-nav a').forEach(l => l.classList.remove('active'));
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  const link = document.querySelector('.tabs-nav a[data-tab="' + tabId + '"]');
+  if (link) link.classList.add('active');
+  const section = document.getElementById(tabId);
+  if (section) section.classList.add('active');
+  if (tabId === 'tab-test' && !testInitialized) loadTest();
+
+}
+
+
+
+/* ══════════════════════════════════════════
+   ТЕСТ — GOOGLE SHEETS DAN YUKLASH
+══════════════════════════════════════════ */
+let testInitialized = false;
+let QUESTIONS = [];
+let currentQ  = 0;
+let answers   = [];
+let checked   = [];
+
+/* Sheets dan savollarni yuklash */
+const SCRIPT = 'https://script.google.com/macros/s/AKfycbzjMtjRzo2_T4CWVGIFg9ErQxHyKVwDwFJlJkgpm7rSsQAaBbq_ozX-NajZYwUmICp1Tw/exec';
+
+async function loadTest() {
+  testInitialized = false; // xato bo'lsa qayta urinish uchun
+  const container = document.getElementById('questionsContainer');
+  const progress  = document.getElementById('progressBar');
+
+  container.innerHTML = '<p style="text-align:center;font-family:Raleway,sans-serif;color:#888;padding:40px 0;">Загрузка вопросов...</p>';
+  document.getElementById('testResult').classList.remove('show');
+  if (progress) progress.style.width = '5%';
+
+  try {
+    console.log('[LLL] Test yuklanmoqda...');
+    const resp = await fetch(SCRIPT + '?action=getTestQuestions&sheet=Test%20Teoria');
+    const text = await resp.text();
+    console.log('[LLL] Server javobi:', text.substring(0, 200));
+
+    const data = JSON.parse(text);
+
+    if (!data.questions || !data.questions.length) {
+      throw new Error('Savollar bo\'lim. Server javobi: ' + JSON.stringify(data));
+    }
+
+    console.log('[LLL] Savollar soni:', data.questions.length);
+    console.log('[LLL] Shuffle: variantlar aralashtirildi');
+
+    QUESTIONS = data.questions
+      .filter(q => {
+        const s = String(q.savol || '').trim().toLowerCase();
+        return s && s !== 'savol' && s !== 'вопрос';
+      })
+      .map(q => {
+        // Sheets da to'g'ri javob har doim E ustunida (D variant)
+        // Variantlarni aralashtirish — to'g'ri javob tasodifiy pozitsiyaga
+        const allOpts = [
+          { text: String(q.a || '').trim(), correct: false },
+          { text: String(q.b || '').trim(), correct: false },
+          { text: String(q.c || '').trim(), correct: false },
+          { text: String(q.d || '').trim(), correct: true }  // D = to'g'ri javob
+        ].filter(o => o.text);
+
+        // Fisher-Yates shuffle
+        for (let i = allOpts.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [allOpts[i], allOpts[j]] = [allOpts[j], allOpts[i]];
+        }
+
+        const correctIdx = allOpts.findIndex(o => o.correct);
+
+        return {
+          q:    String(q.savol || '').trim(),
+          opts: allOpts.map(o => o.text),
+          ans:  correctIdx
+        };
+      })
+      .filter(q => q.q && q.opts[0]);
+
+    console.log('[LLL] Filtrlangan savollar:', QUESTIONS.length);
+    testInitialized = true;
+    initTest();
+
+  } catch(err) {
+    console.error('[LLL] Xato:', err);
+    testInitialized = false;
+    container.innerHTML =
+      '<div style="text-align:center;padding:30px;">' +
+      '<p style="font-family:Raleway,sans-serif;color:#e74c3c;margin-bottom:8px;">Ошибка загрузки вопросов</p>' +
+      '<p style="font-family:Raleway,sans-serif;font-size:0.82rem;color:#999;margin-bottom:20px;">' + err.message + '</p>' +
+      '<button onclick="loadTest()" style="padding:10px 24px;background:#0d1f3c;color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:Raleway,sans-serif;font-size:0.9rem;">Повторить</button>' +
+      '</div>';
+  }
+}
+
+function parseAnswer(t) {
+  t = String(t || '').trim();
+  if (!t) return -1;
+
+  // Sheets da turli formatlar bo'lishi mumkin:
+  // "D", "d", "To'g'ri javob D", "Вариант D", "D variant" va h.k.
+  // Barcha harflardan A/B/C/D/Б ni qidirish
+  var upper = t.toUpperCase();
+
+  // Avval oxirgi harfni tekshir (ko'pincha "To'g'ri javob D" → D)
+  var last = upper.replace(/[^A-ZА-ЯЁ]/g, '');
+  
+  // Kirill va lotin variantlarini tekshir
+  if (upper.indexOf('D') !== -1 || upper.indexOf('Д') !== -1) {
+    // D ustuniga mos — 4-variant (index 3)
+    // Lekin "D variant" nomi ham bo'lishi mumkin, shuning uchun
+    // faqat yolg'iz harf yoki oxirgi harf sifatida qidirish
+    var ch = upper.charAt(upper.length - 1);
+    if (ch === 'D') return 3;
+  }
+  if (upper.indexOf('C') !== -1 && upper.indexOf('D') === -1) return 2;
+  
+  // To'g'ridan harf sifatida tekshir
+  var ch = upper.charAt(upper.length - 1);
+  if (ch === 'A')              return 0;
+  if (ch === 'B' || ch === 'Б') return 1;
+  if (ch === 'C')              return 2;
+  if (ch === 'D')              return 3;
+
+  // Birinchi harf
+  ch = upper.charAt(0);
+  if (ch === 'A')              return 0;
+  if (ch === 'B' || ch === 'Б') return 1;
+  if (ch === 'C')              return 2;
+  if (ch === 'D')              return 3;
+
+  return -1;
+}
+
+function useDemoQuestions() {
+  QUESTIONS = [
+    { q:"Что представляют собой процессуальные документы?", opts:["Документы, которые составляют во всех организациях","Деловые документы, хранящиеся в архиве","Коммерческие документы, которые фиксируются в деле","Официальный письменный документ, который исходит от правомочного органа"], ans:3, fb:"Процессуальный документ — официальный письменный акт от правомочного органа." },
+    { q:"Чему должен способствовать установленный уголовно-процессуальным законодательством порядок?", opts:["Быстрому и полному раскрытию преступлений","Немедленному составлению документов","Проведению допроса и задержанию","Укреплению законности, предупреждению преступлений, защите интересов личности"], ans:3, fb:"Порядок должен способствовать укреплению законности, предупреждению преступлений, защите интересов личности, государства и общества." },
+    { q:"На какие виды можно разделить процессуальные документы?", opts:["Обязательные и дополнительные","Основные и факультативные","Главные и второстепенные","Обязательные и факультативные"], ans:3, fb:"Документы делятся на обязательные (основные) и факультативные (вспомогательные)." },
+    { q:"Что такое форма процессуального документа?", opts:["Установленная структура процессуального документа","Правила и порядок составления процессуальных документов","Соответствие нормам процессуального права","Необходимая совокупность элементов для правильного его оформления и изложения"], ans:3, fb:"Форма процессуального документа — необходимая совокупность элементов для правильного его оформления и изложения содержания." },
+    { q:"Что входит в элементы оформления документа?", opts:["Структурно-композиционные части документа","Виды процессуальных документов","Типы процессуальных документов","Наименование документа, адрес рассылки и отправления, дата, регистрационный номер"], ans:3, fb:"К элементам оформления документа относятся: наименование, адрес рассылки, дата, регистрационный номер, гриф и т.д." },
+    { q:"Что относится к элементам содержания документа?", opts:["Виды процессуальных документов","Наименование документа, адрес рассылки и отправления, дата","Типы процессуальных документов","Структурные части основного текста, приложения, схемы и т. п."], ans:3, fb:"К элементам содержания относятся структурные части основного текста: вводная, описательно-мотивировочная, резолютивная части, а также приложения, схемы." },
+    { q:"Что такое содержание документа и как оно может быть представлено?", opts:["Текст о чём-либо","Грамотное изложение мысли","Текст, в котором соблюдены все части","Фактическая информация документа, фиксирующая факты, решения, деятельность"], ans:3, fb:"Содержание — это фактическая информация документа, фиксирующая факты, решения, деятельность." },
+    { q:"Как различаются документы по своему типовому содержанию?", opts:["По виду документа","По структуре документа","По наличию реквизитов","По содержанию информации"], ans:3, fb:"По типовому содержанию документы различаются по содержанию информации: документы-решения и документы-протоколы." },
+    { q:"Какие виды информации могут содержать процессуальные документы?", opts:["Фактическая, мотивировочная, отсылочная","Констатирующая, фактическая, событийная","Последовательная, логическая, описательная","Событийная, констатирующая, предписывающая"], ans:3, fb:"Виды информации: событийная (описание фактов), констатирующая (перечень фактов), предписывающая (указание на действия)." },
+    { q:"Что вы знаете о реквизите?", opts:["Обязательный элемент документа, не закреплённый за определённым местом","Элемент документа, не имеющий строгого места","Элемент документа, который по желанию может размещаться в разных местах","Обязательный информационный элемент документа, строго закреплённый за определённым местом на бланке"], ans:3, fb:"Реквизит — обязательный информационный элемент документа, строго закреплённый за определённым местом на бланке." }
+  ];
+  const note = document.querySelector('#questionsContainer');
+  if(note) {
+    const banner = document.createElement('p');
+    banner.style.cssText = 'font-family:"Raleway",sans-serif;font-size:0.82rem;color:#BA7517;background:#FAEEDA;padding:8px 14px;border-radius:8px;margin-bottom:16px;';
+    banner.textContent = '⚠ Демо-режим: показаны 10 вопросов. После подключения Apps Script загрузятся все 44 вопроса.';
+    note.parentNode.insertBefore(banner, note);
+  }
+  initTest();
+}
+
+function initTest() {
+  currentQ = 0;
+  answers  = new Array(QUESTIONS.length).fill(-1);
+  checked  = new Array(QUESTIONS.length).fill(false);
+  renderAllQuestions();
+  showQuestion(0);
+}
+
+function renderAllQuestions() {
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+  QUESTIONS.forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'question-block' + (i === 0 ? ' active' : '');
+    block.id = 'qblock-' + i;
+    const letters = 'АБВГ';
+    const optsHTML = q.opts.map((o, j) => `
+      <li class="option-item" data-idx="${j}" onclick="selectOption(${i},${j})">
+        <span class="option-letter">${letters[j]}</span>
+        <span>${o || ''}</span>
+      </li>`).join('');
+    block.innerHTML = `
+      <p class="q-counter">Вопрос ${i+1} из ${QUESTIONS.length}</p>
+      <p class="q-text">${q.q}</p>
+      <ul class="options-list" id="opts-${i}">${optsHTML}</ul>
+      <div class="q-feedback" id="fb-${i}"></div>
+      <div class="test-nav">
+        <button class="btn-check" id="btnCheck-${i}" onclick="checkAnswer(${i})" disabled>Проверить</button>
+        <button class="btn-next  " id="btnNext-${i}"  onclick="goNext(${i})">${i < QUESTIONS.length-1 ? 'Следующий →' : 'Завершить тест'}</button>
+      </div>`;
+    container.appendChild(block);
+  });
+}
+
+function showQuestion(i) {
+  document.querySelectorAll('.question-block').forEach(b => b.classList.remove('active'));
+  const b = document.getElementById('qblock-' + i);
+  if (b) b.classList.add('active');
+  updateProgress(i);
+}
+
+function updateProgress(i) {
+  const pct = Math.round(((i + 1) / QUESTIONS.length) * 100);
+  const bar = document.getElementById('progressBar');
+  if (bar) bar.style.width = pct + '%';
+}
+
+function selectOption(qIdx, optIdx) {
+  if (checked[qIdx]) return;
+  answers[qIdx] = optIdx;
+  document.querySelectorAll(`#opts-${qIdx} .option-item`).forEach(el => el.classList.remove('selected'));
+  document.querySelector(`#opts-${qIdx} [data-idx="${optIdx}"]`).classList.add('selected');
+  document.getElementById('btnCheck-' + qIdx).disabled = false;
+}
+
+function checkAnswer(qIdx) {
+  if (checked[qIdx]) return;
+  checked[qIdx] = true;
+  const q      = QUESTIONS[qIdx];
+  const chosen = answers[qIdx];
+  const fb     = document.getElementById('fb-' + qIdx);
+
+  document.querySelectorAll(`#opts-${qIdx} .option-item`).forEach(el => {
+    const idx = parseInt(el.dataset.idx);
+    if (idx === q.ans) el.classList.add('correct');
+    else if (idx === chosen && chosen !== q.ans) el.classList.add('wrong');
+  });
+
+  if (chosen === q.ans) {
+    fb.className = 'q-feedback show ok';
+    fb.textContent = '✓ Верно!' + (q.fb ? ' ' + q.fb : '');
+  } else {
+    const correct = q.opts[q.ans] || '';
+    fb.className = 'q-feedback show err';
+    fb.textContent = '✗ Неверно. Правильный ответ: ' + correct;
+  }
+
+  document.getElementById('btnCheck-' + qIdx).disabled = true;
+  document.getElementById('btnNext-' + qIdx).classList.add('visible');
+}
+
+function goNext(qIdx) {
+  if (!checked[qIdx]) { checkAnswer(qIdx); return; }
+  if (qIdx < QUESTIONS.length - 1) {
+    currentQ = qIdx + 1;
+    showQuestion(currentQ);
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.querySelectorAll('.question-block').forEach(b => b.classList.remove('active'));
+  const bar = document.getElementById('progressBar');
+  if (bar) bar.style.width = '100%';
+
+  const correct = answers.filter((a, i) => a === QUESTIONS[i].ans).length;
+  const total   = QUESTIONS.length;
+  const pct     = Math.round((correct / total) * 100);
+
+  let grade, gradeClass;
+  if (pct >= 90)      { grade = 'Оценка: 5 — Отлично';               gradeClass = 'grade-5'; }
+  else if (pct >= 75) { grade = 'Оценка: 4 — Хорошо';                gradeClass = 'grade-4'; }
+  else if (pct >= 55) { grade = 'Оценка: 3 — Удовлетворительно';     gradeClass = 'grade-3'; }
+  else                { grade = 'Оценка: 2 — Неудовлетворительно';   gradeClass = 'grade-2'; }
+
+  document.getElementById('resultScore').innerHTML = `${correct} <span>/ ${total}</span>`;
+  document.getElementById('resultLabel').textContent = `Правильных ответов: ${correct} из ${total} (${pct}%)`;
+  document.getElementById('resultGrade').textContent = grade;
+  document.getElementById('resultGrade').className = 'result-grade ' + gradeClass;
+  document.getElementById('testResult').classList.add('show');
+
+  try {
+    const u = JSON.parse(localStorage.getItem('lll_user') || '{}');
+    if (u.name)  document.getElementById('saveNameInput').value  = u.name;
+    if (u.group) document.getElementById('saveGroupInput').value = u.group;
+  } catch(e) {}
+}
+
+function retryTest() {
+  document.getElementById('testResult').classList.remove('show');
+  document.getElementById('saveStatus').textContent = '';
+  initTest();
+}
+
+/* ══════════════════════════════════════════
+   НАТИЖАНИ GOOGLE SHEETS GA СAQЛАШ
+══════════════════════════════════════════ */
+async function saveResult() {
+  const name   = document.getElementById('saveNameInput').value.trim();
+  const group  = document.getElementById('saveGroupInput').value.trim();
+  const status = document.getElementById('saveStatus');
+
+  if (!name || !group) {
+    status.className = 'save-status err';
+    status.textContent = 'Пожалуйста, введите имя и группу.';
+    return;
+  }
+
+  const correct = answers.filter((a, i) => a === QUESTIONS[i].ans).length;
+  const total   = QUESTIONS.length;
+  const pct     = Math.round((correct / total) * 100);
+  const grade   = pct >= 90 ? '5' : pct >= 75 ? '4' : pct >= 55 ? '3' : '2';
+
+  const btn = document.getElementById('btnSave');
+  btn.disabled = true;
+  btn.textContent = 'Сохранение...';
+  status.className = 'save-status';
+  status.textContent = '';
+
+  try {
+    const url = 'https://script.google.com/macros/s/AKfycbzjMtjRzo2_T4CWVGIFg9ErQxHyKVwDwFJlJkgpm7rSsQAaBbq_ozX-NajZYwUmICp1Tw/exec';
+
+    if (!url) {
+      status.className = 'save-status ok';
+      status.textContent = `✓ Результат: ${grade} (${pct}%). После подключения Apps Script данные будут сохраняться автоматически.`;
+      btn.textContent = 'Сохранить результат';
+      btn.disabled = false;
+      return;
+    }
+
+    const params = new URLSearchParams({
+      action:       'saveAnswer',
+      name:         name,
+      group:        group,
+      razdel:       'Теория',
+      tema:         'Тест по теории',
+      uprazhnenie:  'Итоговый тест',
+      ocenka:       grade,
+      kommentariy:  correct + ' из ' + total + ' (' + pct + '%)',
+      otvet:        'Правильных: ' + correct + '/' + total
+    });
+
+    const resp = await fetch(`${url}?${params}`);
+    if (resp.ok) {
+      status.className = 'save-status ok';
+      status.textContent = '✓ Результат успешно сохранён в журнал!';
+      btn.textContent = 'Сохранено ✓';
+    } else {
+      throw new Error(await resp.text());
+    }
+  } catch(e) {
+    status.className = 'save-status err';
+    status.textContent = 'Ошибка сохранения. Попробуйте позже.';
+    btn.textContent = 'Сохранить результат';
+    btn.disabled = false;
+  }
+}
+
+/* Dot animation */
+(function(){
+  const style = document.createElement('style');
+  style.textContent = '.dot-anim{display:inline-block;animation:dots 1.2s steps(4,end) infinite;}@keyframes dots{0%,100%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}}';
+  document.head.appendChild(style);
+})();
+</script>
+</body>
+</html>

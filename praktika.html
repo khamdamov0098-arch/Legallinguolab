@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Практика — LegalLinguoLab</title>
+  <link rel="stylesheet" href="shared.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── LAYOUT ── */
+    .page-wrapper { max-width: 1400px; margin: 0 auto; padding: 2rem 2.5rem 4rem; }
+
+    /* ── PAGE TITLE ── */
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--navy);
+      margin-bottom: .3rem;
+    }
+    .page-subtitle { color: #666; font-size: .95rem; margin-bottom: 2rem; }
+
+    /* ── TABS ── */
+    .tabs {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #e8e0d0;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: .7rem 1.4rem;
+      font-family: 'Raleway', sans-serif;
+      font-size: .95rem;
+      font-weight: 600;
+      color: #888;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: color .2s, border-color .2s;
+    }
+    .tab-btn.active { color: var(--navy); border-bottom-color: var(--gold); }
+    .tab-btn:hover:not(.active) { color: var(--navy); }
+
+    /* ── TAB PANELS ── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ════════════════════════════
+       3-DARAJALI TUZILMA
+    ════════════════════════════ */
+    /* 1-daraja: Temalar (5, 6, 7...) */
+    .prak-topics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.4rem;
+    }
+    @media (max-width: 1024px) {
+      .prak-topics-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .prak-topics-grid { grid-template-columns: 1fr; }
+    }
+    .prak-topics-grid.hidden { display: none; }
+    .prak-topic-card {
+      border: 1.5px solid #e0d8cc;
+      border-radius: 14px;
+      padding: 2rem 2.2rem;
+      cursor: pointer;
+      transition: border-color .2s, box-shadow .2s, transform .15s;
+      background: #fff;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.4rem;
+    }
+    .prak-topic-card:hover { border-color: var(--gold); box-shadow: 0 6px 24px rgba(201,168,76,.18); transform: translateY(-3px); }
+    .prak-topic-card.done { border-color: #4caf8a; }
+    .prak-topic-num {
+      width: 62px; height: 62px;
+      border-radius: 12px;
+      background: var(--navy);
+      color: var(--gold);
+      font-size: .72rem;
+      font-weight: 700;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      flex-shrink: 0;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .prak-topic-num span { font-size: 1.5rem; font-weight: 700; color: #fff; line-height: 1.1; }
+    .prak-topic-info { flex: 1; min-width: 0; }
+    .prak-topic-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--navy); margin-bottom: .4rem; line-height: 1.35; }
+    .prak-topic-meta { font-size: .85rem; color: #888; margin-bottom: .4rem; }
+    .prak-topic-badge { display: inline-block; font-size: .78rem; padding: .2rem .75rem; border-radius: 20px; background: #f0ebe0; color: #666; }
+    .prak-topic-badge.done { background: #e6f4ee; color: #2e7d5e; }
+    .prak-topic-badge.partial { background: #fff4e0; color: #a07020; }
+
+    /* 2-daraja: Kichik mavzular (5.1, 5.2...) */
+    .subtopics-view { display: none; }
+    .subtopics-view.active { display: block; }
+    .subtopics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem;
+    }
+    @media (max-width: 700px) {
+      .subtopics-grid { grid-template-columns: 1fr; }
+    }
+    .subtopic-card {
+      border: 1.5px solid #e0d8cc;
+      border-radius: 14px;
+      padding: 1.8rem 2rem;
+      cursor: pointer;
+      transition: border-color .2s, box-shadow .2s, transform .15s;
+      background: #fff;
+      display: flex; align-items: center; gap: 1.4rem;
+    }
+    .subtopic-card:hover { border-color: var(--gold); box-shadow: 0 6px 24px rgba(201,168,76,.18); transform: translateY(-3px); }
+    .subtopic-card.done { border-color: #4caf8a; }
+    .subtopic-num {
+      min-width: 60px; height: 60px;
+      border-radius: 12px;
+      background: var(--navy);
+      color: var(--gold);
+      font-size: .95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center; justify-content: center;
+      flex-shrink: 0;
+      padding: 0 .6rem;
+    }
+    .subtopic-info { flex: 1; min-width: 0; }
+    .subtopic-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--navy); font-weight: 600; margin-bottom: .4rem; line-height: 1.3; }
+    .subtopic-meta { font-size: .85rem; color: #999; margin-bottom: .4rem; }
+    .subtopic-badge { font-size: .8rem; padding: .2rem .75rem; border-radius: 20px; background: #f0ebe0; color: #666; display: inline-block; }
+    .subtopic-badge.done { background: #e6f4ee; color: #2e7d5e; }
+
+    /* ── breadcrumb ── */
+    .breadcrumb {
+      display: flex; align-items: center; gap: .5rem;
+      font-size: .88rem; color: #888; margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      padding: .6rem 1rem;
+      background: #faf8f4;
+      border-radius: 8px;
+      border: 1px solid #e8e0d0;
+    }
+    .breadcrumb-link {
+      cursor: pointer; color: var(--navy); font-weight: 600;
+      padding: .2rem .5rem; border-radius: 5px;
+      transition: background .15s;
+    }
+    .breadcrumb-link:hover { background: #f0ebe0; text-decoration: none; }
+    .breadcrumb-sep { color: #ccc; font-size: 1rem; }
+
+    /* ── EXERCISES VIEW ── */
+    .exercises-view { display: none; }
+    .exercises-view.active { display: block; }
+    
+
+
+
+    .topic-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #e8e0d0;
+    }
+    .topic-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--navy);
+      margin-bottom: .25rem;
+    }
+    .topic-header p { color: #777; font-size: .9rem; }
+
+    /* Exercise accordion */
+    .exercise-item {
+      border: 1.5px solid #e0d8cc;
+      border-radius: 10px;
+      margin-bottom: .9rem;
+      overflow: hidden;
+      transition: border-color .2s;
+    }
+    .exercise-item.answered { border-color: #4caf8a; }
+
+    .exercise-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      background: #faf8f4;
+      transition: background .15s;
+    }
+    .exercise-header:hover { background: #f5f0e8; }
+
+    .ex-left { display: flex; align-items: center; gap: .8rem; }
+    .ex-num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: #fff;
+      font-size: .82rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .exercise-item.answered .ex-num { background: #4caf8a; }
+    .ex-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .ex-status {
+      font-size: .8rem;
+      color: #aaa;
+      white-space: nowrap;
+    }
+    .ex-status.done { color: #4caf8a; font-weight: 600; }
+    .ex-arrow {
+      transition: transform .2s;
+      color: #aaa;
+      margin-left: .5rem;
+    }
+    .exercise-item.open .ex-arrow { transform: rotate(180deg); }
+
+    .exercise-body {
+      display: none;
+      padding: 1.2rem;
+      border-top: 1px solid #e8e0d0;
+      background: #fff;
+    }
+    .exercise-item.open .exercise-body { display: block; }
+
+    .task-text table { width:100%; border-collapse:collapse; margin-top:.5rem; font-size:.88rem; }
+    .task-text table td, .task-text table th { border:1px solid #d0c8b8; padding:.4rem .7rem; vertical-align:top; }
+    .task-text table th { background:#f5f0e8; font-weight:600; color:var(--navy); }
+    .task-text table tr:nth-child(even) td { background:#faf8f4; }
+    .task-text {
+      font-size: .95rem;
+      color: #333;
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+      background: #faf8f4;
+      border-left: 3px solid var(--gold);
+      padding: 1rem 1.1rem;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .answer-area {
+      width: 100%;
+      min-height: 120px;
+      padding: .8rem 1rem;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-family: 'Raleway', sans-serif;
+      font-size: .9rem;
+      resize: vertical;
+      transition: border-color .2s;
+      box-sizing: border-box;
+    }
+    .answer-area:focus { outline: none; border-color: var(--gold); }
+    .answer-area:disabled { background: #f5f5f5; color: #555; }
+
+    .answer-saved {
+      font-size: .85rem;
+      color: #4caf8a;
+      margin-top: .5rem;
+      display: none;
+    }
+    .answer-saved.visible { display: block; }
+
+    .submit-ex-btn {
+      margin-top: .8rem;
+      padding: .6rem 1.4rem;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 600;
+      font-size: .9rem;
+      cursor: pointer;
+      transition: background .2s, opacity .2s;
+    }
+    .submit-ex-btn:hover { background: #162d50; }
+    .submit-ex-btn:disabled { opacity: .5; cursor: default; }
+
+    /* ── GRADE CHIP ── */
+    .grade-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .82rem;
+      padding: .25rem .75rem;
+      border-radius: 20px;
+      margin-top: .6rem;
+    }
+    .grade-chip.graded { background: #e6f4ee; color: #2e7d5e; }
+    .grade-chip.pending { background: #fff4e0; color: #a07020; }
+
+    /* ════════════════════════════
+       TEST PANEL
+    ════════════════════════════ */
+    .test-intro {
+      background: linear-gradient(135deg, #0d1f3c 0%, #162d50 100%);
+      border-radius: 14px;
+      padding: 2rem 2.5rem;
+      color: #fff;
+      margin-bottom: 2rem;
+    }
+    .test-intro h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      margin-bottom: .5rem;
+    }
+    .test-intro p { opacity: .8; font-size: .95rem; }
+    .test-intro .test-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1.2rem;
+    }
+    .test-meta-item { display: flex; flex-direction: column; }
+    .test-meta-item span:first-child { font-size: .75rem; opacity: .6; text-transform: uppercase; letter-spacing: .06em; }
+    .test-meta-item span:last-child { font-size: 1.1rem; font-weight: 700; color: var(--gold); }
+
+    .start-test-btn {
+      margin-top: 1.5rem;
+      padding: .75rem 2rem;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 10px;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity .2s, transform .15s;
+    }
+    .start-test-btn:hover { opacity: .9; transform: translateY(-1px); }
+
+    /* Test questions */
+    #test-questions-panel { display: none; }
+    #test-questions-panel.active { display: block; }
+    #test-intro-panel.hidden { display: none; }
+
+    .test-progress-bar {
+      height: 6px;
+      background: #e8e0d0;
+      border-radius: 3px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+    .test-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--navy), var(--gold));
+      border-radius: 3px;
+      transition: width .3s ease;
+    }
+
+    .question-card {
+      background: #fff;
+      border: 1.5px solid #e0d8cc;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .q-num {
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: .5rem;
+    }
+    .q-text {
+      font-size: 1rem;
+      color: var(--navy);
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .options-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .5rem; }
+    .option-item {
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      padding: .75rem 1rem;
+      border: 1.5px solid #e0d8cc;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      font-size: .93rem;
+    }
+    .option-item:hover { border-color: var(--gold); background: #fffdf5; }
+    .option-item.selected { border-color: var(--navy); background: #f0f4fa; }
+    .option-item.correct { border-color: #4caf8a; background: #e6f4ee; }
+    .option-item.wrong { border-color: #e57373; background: #fdecea; }
+    .option-radio {
+      width: 18px; height: 18px;
+      border: 2px solid #ccc;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: .1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .15s;
+    }
+    .option-item.selected .option-radio { border-color: var(--navy); }
+    .option-item.selected .option-radio::after {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--navy);
+    }
+    .option-item.correct .option-radio { border-color: #4caf8a; }
+    .option-item.correct .option-radio::after { background: #4caf8a; }
+    .option-item.wrong .option-radio { border-color: #e57373; }
+    .option-item.wrong .option-radio::after { background: #e57373; }
+
+    .test-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e8e0d0;
+    }
+    .test-nav-btn {
+      padding: .65rem 1.5rem;
+      border-radius: 8px;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 600;
+      font-size: .9rem;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .test-nav-btn.prev { background: none; border: 1.5px solid #ddd; color: var(--navy); }
+    .test-nav-btn.prev:hover { border-color: var(--navy); }
+    .test-nav-btn.next { background: var(--navy); border: none; color: #fff; }
+    .test-nav-btn.next:hover { background: #162d50; }
+    .test-nav-btn:disabled { opacity: .4; cursor: default; }
+
+    .submit-test-btn {
+      padding: .75rem 2rem;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 10px;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      display: none;
+    }
+    .submit-test-btn.visible { display: inline-block; }
+
+    /* Result */
+    .test-result {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    .test-result.active { display: block; }
+    .result-circle {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      border: 6px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+      margin: 0 auto 1.5rem;
+    }
+    .result-score { font-size: 2rem; font-weight: 700; color: var(--navy); }
+    .result-total { font-size: .85rem; color: #888; }
+    .result-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--navy);
+      margin-bottom: .5rem;
+    }
+    .result-subtitle { color: #777; margin-bottom: 2rem; }
+    .result-grade {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: .5rem;
+    }
+    .retry-test-btn {
+      padding: .65rem 1.8rem;
+      border: 1.5px solid var(--navy);
+      background: none;
+      border-radius: 8px;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 600;
+      color: var(--navy);
+      cursor: pointer;
+    }
+
+    /* ── LOADING / SKELETON ── */
+    .loading-box {
+      text-align: center;
+      padding: 3rem;
+      color: #aaa;
+      font-size: .95rem;
+    }
+    .spinner {
+      width: 32px; height: 32px;
+      border: 3px solid #e8e0d0;
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── ALERT ── */
+    .alert {
+      padding: .8rem 1.2rem;
+      border-radius: 8px;
+      font-size: .9rem;
+      margin-bottom: 1rem;
+    }
+    .alert.error { background: #fdecea; color: #c62828; border: 1px solid #ef9a9a; }
+    .alert.success { background: #e6f4ee; color: #2e7d5e; border: 1px solid #a5d6a7; }
+  </style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<header>
+  <div class="header-inner">
+    <a class="logo" href="index.html">
+      <img src="logo.jpg" alt="LegalLinguoLab">
+      <div><div class="logo-text">Legal<span>Linguo</span>Lab</div><span class="logo-sub">Образовательная платформа юридического языка</span></div>
+    </a>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    <nav class="header-nav">
+      <a href="index.html">Главная</a>
+      <div class="dropdown"><a href="#">Обучение ▾</a><div class="dropdown-menu">
+        <a href="teoria.html"><span class="dm-icon">📚</span>Теория</a>
+        <a href="praktika.html" class="active"><span class="dm-icon">✍️</span>Практика</a>
+        <a href="kontrol.html"><span class="dm-icon">🎯</span>Контроль</a>
+      </div></div>
+      <div class="dropdown"><a href="#">Материалы ▾</a><div class="dropdown-menu">
+        <a href="literatura.html"><span class="dm-icon">📖</span>Учебная литература</a>
+        <a href="about.html"><span class="dm-icon">ℹ️</span>О платформе</a>
+      </div></div>
+      <a href="grades.html">📊 Мои оценки</a>
+      <a href="muallif.html">👤 Об авторе</a>
+    </nav>
+    <div id="navUserBlock"></div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">🏠 Главная</a>
+    <div class="mobile-section-label">Обучение</div>
+    <a href="teoria.html">📚 Теория</a>
+    <a href="praktika.html" class="active">✍️ Практика</a>
+    <a href="kontrol.html">🎯 Контроль</a>
+    <div class="mobile-section-label">Материалы</div>
+    <a href="literatura.html">📖 Учебная литература</a>
+    <a href="about.html">ℹ️ О платформе</a>
+    <div class="mobile-section-label">Другое</div>
+    <a href="grades.html">📊 Мои оценки</a>
+    <a href="muallif.html">👤 Об авторе</a>
+    <div id="mobileUserBlock"></div>
+  </div>
+</header>
+
+  <div class="page-wrapper">
+    <h1 class="page-title">✍️ Практика</h1>
+    <p class="page-subtitle">Практические упражнения и тест по темам 5–14</p>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="exercises">Упражнения</button>
+      <button class="tab-btn" data-tab="test">Тест</button>
+    </div>
+
+    <!-- ══════════════════════════
+         TAB: УПРАЖНЕНИЯ
+    ══════════════════════════ -->
+    <div id="tab-exercises" class="tab-panel active">
+
+      <!-- Breadcrumb -->
+      <div class="breadcrumb" id="breadcrumb" style="display:none"></div>
+
+      <!-- 1-daraja: Temalar (5,6,7...) -->
+      <div id="topics-grid" class="prak-topics-grid">
+        <div class="loading-box"><div class="spinner"></div>Загрузка тем...</div>
+      </div>
+
+      <!-- 2-daraja: Kichik mavzular (5.1, 5.2...) -->
+      <div id="subtopics-view" class="subtopics-view">
+        <div class="subtopics-grid" id="subtopics-grid"></div>
+      </div>
+
+      <!-- 3-daraja: Mashqlar -->
+      <div id="exercises-view" class="exercises-view">
+        <div class="topic-header">
+          <h2 id="current-topic-name">—</h2>
+          <p id="current-topic-meta">—</p>
+        </div>
+        <div id="exercises-list">
+          <div class="loading-box"><div class="spinner"></div>Загрузка упражнений...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════
+         TAB: ТЕСТ
+    ══════════════════════════ -->
+    <div id="tab-test" class="tab-panel">
+
+      <!-- Intro -->
+      <div id="test-intro-panel">
+        <div class="test-intro">
+          <h2>Тест по практике</h2>
+          <p>Проверьте свои знания по всем темам практической части курса.</p>
+          <div class="test-meta">
+            <div class="test-meta-item">
+              <span>Вопросов</span>
+              <span id="test-total-count">—</span>
+            </div>
+            <div class="test-meta-item">
+              <span>Попытки</span>
+              <span>Неограниченно</span>
+            </div>
+            <div class="test-meta-item">
+              <span>Лучший результат</span>
+              <span id="test-best-score">—</span>
+            </div>
+          </div>
+          <button class="start-test-btn" id="start-test-btn">Начать тест</button>
+        </div>
+        <div id="test-load-error" class="alert error" style="display:none;"></div>
+      </div>
+
+      <!-- Questions -->
+      <div id="test-questions-panel">
+        <div class="test-progress-bar">
+          <div class="test-progress-fill" id="test-progress-fill" style="width:0%"></div>
+        </div>
+        <div id="questions-list"></div>
+        <div class="test-nav">
+          <button class="test-nav-btn prev" id="prev-q-btn" disabled>← Назад</button>
+          <span id="q-counter" style="font-size:.9rem;color:#888;"></span>
+          <div>
+            <button class="test-nav-btn next" id="next-q-btn">Далее →</button>
+            <button class="submit-test-btn" id="submit-test-btn">Завершить тест</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div id="test-result" class="test-result">
+        <div class="result-circle">
+          <span class="result-score" id="result-score">0</span>
+          <span class="result-total" id="result-total">из 0</span>
+        </div>
+        <div class="result-grade" id="result-grade">—</div>
+        <h2 class="result-title" id="result-title">—</h2>
+        <p class="result-subtitle" id="result-subtitle">—</p>
+        <button class="retry-test-btn" id="retry-btn">Пройти ещё раз</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ICONS & NAV -->
+  <script src="icons.js"></script>
+  <script src="nav.js"></script>
+  <script>
+  // ══════════════════════════════════════════════════
+  //  CONFIG
+  // ══════════════════════════════════════════════════
+  if (typeof SCRIPT_URL === 'undefined') {
+    var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzjMtjRzo2_T4CWVGIFg9ErQxHyKVwDwFJlJkgpm7rSsQAaBbq_ozX-NajZYwUmICp1Tw/exec';
+  }
+
+  // ── Auth helper ──────────────────────────────────
+  function getStudent() {
+    const s = localStorage.getItem('lll_user') || localStorage.getItem('student');
+    if (!s) return null;
+    const u = JSON.parse(s);
+    return { id: u.id || u.telefon || u.name, name: u.name, group: u.group };
+  }
+  function requireAuth() {
+    if (!getStudent()) { window.location.href = 'login.html'; }
+  }
+  requireAuth();
+
+  // ══════════════════════════════════════════════════
+  //  SHEETS API helpers
+  // ══════════════════════════════════════════════════
+  async function fetchSheet(sheet) {
+    const url = `${SCRIPT_URL}?action=getSheet&sheet=${encodeURIComponent(sheet)}`;
+    const r = await fetch(url);
+    const d = await r.json();
+    if (d.error) throw new Error(d.error);
+    return d.data; // array of arrays
+  }
+
+  async function postAnswer(payload) {
+    const params = new URLSearchParams();
+    params.append('action', 'savePraktikaAnswer');
+    Object.entries(payload).forEach(([k,v]) => params.append(k, String(v)));
+    const r = await fetch(SCRIPT_URL + '?' + params.toString());
+    return r.json();
+  }
+
+  // ══════════════════════════════════════════════════
+  //  TABS
+  // ══════════════════════════════════════════════════
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ══════════════════════════════════════════════════
+  //  EXERCISES — load topics
+  // ══════════════════════════════════════════════════
+  /*
+    Expected "Практика" sheet format:
+    Row 1: headers  → Тема | Название | Упражнение | Задание
+    Row 2+: data    → 5    | Употребление терминов | 1 | Упражнение 1. Найдите в словаре...
+  */
+  let practiceData = [];
+  let temasMap    = {};    // { "5": { subs: { "5.1": { name, exercises:[] } } } }
+  let savedAnswers = {};   // { "sub_ex": {answer, grade, comment} }
+  let currentTema = null;
+  let currentSub  = null;
+
+  async function loadPractice() {
+    try {
+      const rows = await fetchSheet('Практика');
+      practiceData = [];
+
+      // Format aniqlash: 1-qator sarlavhalarni tekshirish
+      // Yangi: A=Тема, B=Kichik mavzu, C=Название, D=Упражнение, E=Задание (5 ustun)
+      // Eski:  A=Тема, B=Название,     C=Упражнение, D=Задание    (4 ustun)
+      const header = rows[0] || [];
+      const isNewFormat = header.length >= 5 || 
+        rows.slice(1).some(r => r[1] && r[2] && !isNaN(Number(r[3])));
+
+      console.log('Format:', isNewFormat ? 'YANGI (5 ustun)' : 'ESKI (4 ustun)');
+
+      rows.slice(1).forEach(r => {
+        if (!r[0]) return;
+        if (isNewFormat) {
+          // A=tema, B=sub, C=nom, D=ex, E=task
+          practiceData.push({
+            tema: String(r[0]||'').trim(),
+            sub:  String(r[1]||r[0]||'').trim(),
+            name: String(r[2]||'').trim(),
+            ex:   String(r[3]||'').trim(),
+            task: String(r[4]||'').trim(),
+          });
+        } else {
+          // A=tema(yoki sub), B=nom, C=ex, D=task
+          const t = String(r[0]||'').trim();
+          practiceData.push({
+            tema: t.includes('.') ? t.split('.')[0] : t,
+            sub:  t,
+            name: String(r[1]||'').trim(),
+            ex:   String(r[2]||'').trim(),
+            task: String(r[3]||'').trim(),
+          });
+        }
+      });
+
+      // temasMap: { "5": { subs: { "5.1": { name, exercises:[] } } } }
+      temasMap = {};
+      practiceData.filter(r => r.tema && r.ex).forEach(row => {
+        if (!temasMap[row.tema]) temasMap[row.tema] = { subs: {} };
+        const sub = row.sub || row.tema;
+        if (!temasMap[row.tema].subs[sub]) temasMap[row.tema].subs[sub] = { name: row.name, exercises: [] };
+        temasMap[row.tema].subs[sub].exercises.push({ ex: row.ex, task: row.task });
+      });
+
+      await loadMyAnswers();
+      renderTopicsGrid();
+      // index.html dan #tema=N hash orqali kelsa avtomatik ochish
+      const _hash = window.location.hash;
+      const _hm = _hash.match(/tema=(\d+)/);
+      if (_hm && temasMap[_hm[1]]) setTimeout(() => openTema(_hm[1]), 200);
+    } catch(e) {
+      document.getElementById('topics-grid').innerHTML =
+        `<div class="alert error">Ошибка загрузки: ${e.message}</div>`;
+    }
+  }
+
+  async function loadMyAnswers() {
+    const st = getStudent();
+    try {
+      const rows = await fetchSheet('Ответы');
+      savedAnswers = {};
+      rows.slice(1).forEach(r => {
+        const rowId   = String(r[0] || '');
+        const rowName = String(r[1] || '');
+        const isMe = rowId === String(st.id) || rowName === st.name;
+        if (isMe && r[3] === 'Практика') {
+          const key = `${r[4]}_${r[5]}`;
+          savedAnswers[key] = { answer: r[8]||'', grade: r[6]||'', comment: r[7]||'' };
+        }
+      });
+    } catch(e) {}
+  }
+
+  function subProgress(tema, sub) {
+    const s = temasMap[tema]?.subs[sub];
+    if (!s) return { done:0, total:0 };
+    let done = 0;
+    s.exercises.forEach(ex => { if (savedAnswers[`${sub}_${ex.ex}`]) done++; });
+    return { done, total: s.exercises.length };
+  }
+
+  function temaProgress(tema) {
+    const t = temasMap[tema];
+    if (!t) return { done:0, total:0 };
+    let done=0, total=0;
+    Object.keys(t.subs).forEach(sub => {
+      const p = subProgress(tema, sub);
+      done += p.done; total += p.total;
+    });
+    return { done, total };
+  }
+
+  function renderTopicsGrid() {
+    const grid = document.getElementById('topics-grid');
+    const temas = Object.keys(temasMap).sort((a,b) => parseFloat(a)-parseFloat(b));
+    if (!temas.length) {
+      grid.innerHTML = '<div class="alert error">Темы не найдены.</div>';
+      return;
+    }
+    grid.innerHTML = temas.map(t => {
+      const prog = temaProgress(t);
+      const allDone = prog.done === prog.total && prog.total > 0;
+      const partial = prog.done > 0 && !allDone;
+      const subCount = Object.keys(temasMap[t].subs).length;
+      const badgeCls = allDone ? 'done' : partial ? 'partial' : '';
+      const badgeTxt = allDone ? '✓ Выполнено' : `${prog.done} / ${prog.total} выполнено`;
+      return `<div class="prak-topic-card${allDone?' done':''}" data-tema="${t}">
+        <div class="prak-topic-num"><span>${t}</span>ТЕМА</div>
+        <div class="prak-topic-info">
+          <div class="prak-topic-name">Тема ${t}</div>
+          <div class="prak-topic-meta">${subCount} раздел · ${prog.total} упражнений</div>
+          <div style="height:5px;background:#e8e0d0;border-radius:3px;margin:.4rem 0;overflow:hidden;">
+            <div style="height:100%;width:${prog.total>0?Math.round(prog.done/prog.total*100):0}%;background:${allDone?'#4caf8a':'var(--gold)'};border-radius:3px;transition:width .4s;"></div>
+          </div>
+          <div class="prak-topic-badge ${badgeCls}">${badgeTxt}</div>
+        </div>
+      </div>`;
+    }).join('');
+    grid.querySelectorAll('.prak-topic-card').forEach(card => {
+      card.addEventListener('click', () => openTema(card.dataset.tema));
+    });
+  }
+
+  function openTema(tema) {
+    currentTema = tema;
+    const subs = temasMap[tema]?.subs || {};
+    const subKeys = Object.keys(subs);
+
+    document.getElementById('topics-grid').classList.add('hidden');
+    document.getElementById('exercises-view').classList.remove('active');
+
+    // Agar faqat 1 ta sub bo'lsa — to'g'ridan mashqlarga o't
+    if (subKeys.length === 1) {
+      openSubtopic(tema, subKeys[0]);
+      return;
+    }
+
+    // Ko'p sub bo'lsa — subtopics grid ko'rsat
+    document.getElementById('subtopics-view').classList.add('active');
+    showBreadcrumb([
+      { label: 'Все темы', action: () => goToTopics() },
+      { label: `Тема ${tema}` }
+    ]);
+    renderSubtopicsGrid(tema);
+    history.pushState({page:'subtopics', tema}, '', '#sub');
+  }
+
+  function renderSubtopicsGrid(tema) {
+    const subs = temasMap[tema]?.subs || {};
+    const subKeys = Object.keys(subs).sort((a,b) => parseFloat(a)-parseFloat(b));
+    const grid = document.getElementById('subtopics-grid');
+    grid.innerHTML = subKeys.map(sub => {
+      const prog = subProgress(tema, sub);
+      const allDone = prog.done === prog.total && prog.total > 0;
+      const pct = prog.total > 0 ? Math.round(prog.done/prog.total*100) : 0;
+      return `<div class="subtopic-card${allDone?' done':''}" data-tema="${tema}" data-sub="${sub}">
+        <div class="subtopic-num">${sub}</div>
+        <div class="subtopic-info">
+          <div class="subtopic-name">${subs[sub].name || sub}</div>
+          <div class="subtopic-meta">${prog.total} упражнений</div>
+          <div style="height:5px;background:#e8e0d0;border-radius:3px;margin-bottom:.4rem;overflow:hidden;">
+            <div style="height:100%;width:${pct}%;background:${allDone?'#4caf8a':'var(--gold)'};border-radius:3px;transition:width .4s;"></div>
+          </div>
+          <div class="subtopic-badge${allDone?' done':''}">
+            ${allDone ? '✓ Выполнено' : prog.done + ' / ' + prog.total + ' выполнено'}
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+    grid.querySelectorAll('.subtopic-card').forEach(card => {
+      card.addEventListener('click', () => openSubtopic(card.dataset.tema, card.dataset.sub));
+    });
+  }
+
+  function openSubtopic(tema, sub) {
+    currentSub = sub;
+    document.getElementById('subtopics-view').classList.remove('active');
+    document.getElementById('exercises-view').classList.add('active');
+
+    const subData = temasMap[tema]?.subs[sub];
+    document.getElementById('current-topic-name').textContent = `${sub}. ${subData?.name || ''}`;
+    document.getElementById('current-topic-meta').textContent = `${subData?.exercises.length || 0} упражнений`;
+
+    // Breadcrumb
+    showBreadcrumb([
+      { label: 'Все темы', action: () => goToTopics() },
+      { label: `Тема ${tema}`, action: () => openTema(tema) },
+      { label: sub }
+    ]);
+
+    renderExercisesList(sub);
+    history.pushState({page:'exercises', tema, sub}, '', '#ex');
+  }
+
+  function showBreadcrumb(items) {
+    const bc = document.getElementById('breadcrumb');
+    bc.style.display = 'flex';
+    bc.innerHTML = items.map((item, i) => {
+      const isLast = i === items.length - 1;
+      const sep = i > 0 ? '<span class="breadcrumb-sep">›</span>' : '';
+      if (isLast) return sep + `<span>${item.label}</span>`;
+      return sep + `<span class="breadcrumb-link" onclick="(${item.action})()">${item.label}</span>`;
+    }).join('');
+  }
+
+  function goToTopics() {
+    document.getElementById('topics-grid').classList.remove('hidden');
+    document.getElementById('subtopics-view').classList.remove('active');
+    document.getElementById('exercises-view').classList.remove('active');
+    document.getElementById('breadcrumb').style.display = 'none';
+    currentTema = null; currentSub = null;
+    history.replaceState({page:'topics'}, '', '#');
+  }
+
+  // Brauzer back tugmasini ushlash
+  window.addEventListener('popstate', function(e) {
+    if (currentSub) {
+      // Mashqlar → Kichik mavzularga qayt
+      document.getElementById('exercises-view').classList.remove('active');
+      document.getElementById('subtopics-view').classList.add('active');
+      showBreadcrumb([
+        { label: 'Все темы', action: () => goToTopics() },
+        { label: 'Тема ' + currentTema }
+      ]);
+      currentSub = null;
+      history.replaceState({page:'subtopics'}, '', '#sub');
+    } else if (currentTema) {
+      // Kichik mavzular → Temalarga qayt
+      goToTopics();
+    }
+    // Agar ikkalasi ham null — sahifadan chiqishga ruxsat
+  });
+
+  // openTopic — 3-daraja tizimida ishlatilmaydi
+
+
+
+  function renderExercisesList(sub) {
+    const topic = temasMap[currentTema]?.subs[sub];
+    const list  = document.getElementById('exercises-list');
+    if (!topic) { list.innerHTML = '<div class="alert error">Упражнения не найдены</div>'; return; }
+
+    list.innerHTML = topic.exercises.map((ex, i) => {
+      const key     = `${sub}_${ex.ex}`;
+      const saved   = savedAnswers[key];
+      const answered = !!saved;
+      const graded  = saved && saved.grade;
+
+      return `
+        <div class="exercise-item${answered?' answered':''}" id="exitem-${sub}-${i}">
+          <div class="exercise-header" onclick="toggleEx('${sub}',${i})">
+            <div class="ex-left">
+              <div class="ex-num">${i+1}</div>
+              <div class="ex-title">Упражнение ${ex.ex}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:.5rem">
+              <span class="ex-status${answered?' done':''}">
+                ${answered ? (graded ? `Оценка: ${saved.grade}` : '✓ Отправлено') : 'Не выполнено'}
+              </span>
+              <span class="ex-arrow">▼</span>
+            </div>
+          </div>
+          <div class="exercise-body">
+            <div class="task-text">${formatTask(ex.task)}</div>
+            ${graded ? `
+              <div class="grade-chip graded">✓ Оценено: ${saved.grade}</div>
+              ${saved.comment ? `<p style="font-size:.85rem;color:#555;margin-top:.5rem;">Комментарий: ${saved.comment}</p>` : ''}
+              <textarea class="answer-area" style="margin-top:1rem" disabled>${saved.answer}</textarea>
+            ` : answered ? `
+              <div class="grade-chip pending">⏳ На проверке у преподавателя</div>
+              <textarea class="answer-area" style="margin-top:1rem" disabled>${saved.answer}</textarea>
+            ` : `
+              <textarea class="answer-area" id="ans-${sub}-${i}" placeholder="Введите ваш ответ здесь..."></textarea>
+              <div>
+                <button class="submit-ex-btn" onclick="submitAnswer('${sub}','${ex.ex}',${i})">Отправить ответ</button>
+              </div>
+              <div class="answer-saved" id="saved-msg-${sub}-${i}">✓ Ответ сохранён</div>
+            `}
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function formatTask(text) {
+    if (!text) return '';
+
+    // Agar HTML tag bo'lsa — to'g'ridan render
+    if (text.includes('<table') || text.includes('<tr>')) return text;
+
+    // Tab belgilari bor satrlarni jadvalga aylantirish
+    const lines = text.split('\n');
+    const hasTable = lines.some(l => l.includes('\t'));
+
+    if (hasTable) {
+      // Birinchi qism (jadvalgacha) — sarlavha matni
+      let pre = '', tableLines = [], post = '';
+      let inTable = false;
+      lines.forEach(line => {
+        if (line.includes('\t')) {
+          inTable = true;
+          tableLines.push(line);
+        } else if (inTable && line.trim() === '') {
+          // Bo'sh qator — jadval tugadi
+        } else if (inTable) {
+          post += line + '\n';
+        } else {
+          pre += line + '\n';
+        }
+      });
+
+      let html = '';
+      if (pre.trim()) html += '<p style="margin-bottom:.6rem">' + pre.trim().replace(/\n/g,'<br>') + '</p>';
+
+      if (tableLines.length) {
+        html += '<table><tbody>';
+        tableLines.forEach((line, i) => {
+          const cells = line.split('\t');
+          const tag = (i === 0 && tableLines.length > 1) ? 'th' : 'td';
+          html += '<tr>' + cells.map(c => '<' + tag + '>' + c.trim() + '</' + tag + '>').join('') + '</tr>';
+        });
+        html += '</tbody></table>';
+      }
+
+      if (post.trim()) html += '<p style="margin-top:.6rem">' + post.trim().replace(/\n/g,'<br>') + '</p>';
+      return html;
+    }
+
+    // Oddiy matn
+    return text.replace(/\n/g, '<br>');
+  }
+
+  function toggleEx(tema, idx) {
+    const item = document.getElementById(`exitem-${currentSub}-${idx}`);
+    item.classList.toggle('open');
+  }
+
+  // ── Submit exercise answer ────────────────────────
+  async function submitAnswer(sub, exNum, idx) {
+    const st  = getStudent();
+    const ta  = document.getElementById(`ans-${currentSub}-${idx}`);
+    const btn = ta.nextElementSibling.querySelector('button');
+    const answer = ta.value.trim();
+
+    if (!answer) { ta.style.borderColor = '#e57373'; return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Сохранение...';
+
+    try {
+      const payload = {
+        id:       st.id,
+        name:     st.name,
+        group:    st.group,
+        razdel:   'Практика',
+        tema:     sub,
+        exercise: exNum,
+        answer:   answer,
+        date:     new Date().toLocaleString('ru-RU')
+      };
+      console.log('postAnswer payload:', JSON.stringify(payload));
+      const result = await postAnswer(payload);
+      console.log('postAnswer result:', JSON.stringify(result));
+
+      // update local cache
+      savedAnswers[`${sub}_${exNum}`] = { answer, grade: '', comment: '' };
+
+      // exercise item ni yangilash
+      const item = document.getElementById(`exitem-${currentSub}-${idx}`);
+      if (item) {
+        item.classList.add('answered');
+        const exNum2 = item.querySelector('.ex-num');
+        if (exNum2) exNum2.style.background = '#4caf8a';
+        const exStatus = item.querySelector('.ex-status');
+        if (exStatus) { exStatus.textContent = '✓ Отправлено'; exStatus.classList.add('done'); }
+      }
+
+      ta.disabled = true;
+      btn.style.display = 'none';
+
+      const msg = document.getElementById(`saved-msg-${currentSub}-${idx}`);
+      if (msg) msg.classList.add('visible');
+
+      // refresh badges
+      if (currentTema) renderSubtopicsGrid(currentTema);
+
+    } catch(e) {
+      btn.disabled = false;
+      btn.textContent = 'Отправить ответ';
+      alert('Ошибка сохранения: ' + e.message);
+    }
+  }
+
+  // ══════════════════════════════════════════════════
+  //  TEST
+  // ══════════════════════════════════════════════════
+  /*
+    "Test Практика" sheet format (same as Test Teoria):
+    Savol(A) | A(B) | Б(C) | C(D) | D(E) | To'g'ri javob(F)
+    row 1 = header
+  */
+  let testQuestions = [];  // shuffled for current session
+  let testAnswers   = {};  // { idx: chosenLetter }
+  let currentQ      = 0;
+  let testSubmitted  = false;
+
+  async function loadTest() {
+    const errEl = document.getElementById('test-load-error');
+    try {
+      const rows = await fetchSheet('Test Практика');
+      const raw = rows.slice(1).filter(r => r[0]);
+      testQuestions = shuffleArray(raw.map(r => ({
+        q:       r[0],
+        options: { A: r[1], Б: r[2], В: r[3], Д: r[4] },
+        correct: String(r[5] || 'Д').trim()
+      })));
+      document.getElementById('test-total-count').textContent = testQuestions.length;
+
+      // best score
+      const st = getStudent();
+      try {
+        const resp = await fetchSheet('Ответы');
+        let best = null;
+        resp.slice(1).forEach(r => {
+          if (String(r[0]) === String(st.id) && r[3] === 'Тест Практика') {
+            const sc = parseFloat(r[6]);
+            if (!isNaN(sc) && (best === null || sc > best)) best = sc;
+          }
+        });
+        document.getElementById('test-best-score').textContent = best !== null ? best + '%' : 'Нет';
+      } catch(e) { document.getElementById('test-best-score').textContent = '—'; }
+
+    } catch(e) {
+      errEl.textContent = 'Ошибка загрузки теста: ' + e.message;
+      errEl.style.display = 'block';
+      document.getElementById('start-test-btn').disabled = true;
+    }
+  }
+
+  document.getElementById('start-test-btn').addEventListener('click', startTest);
+  document.getElementById('retry-btn').addEventListener('click', () => {
+    document.getElementById('test-result').classList.remove('active');
+    document.getElementById('test-intro-panel').classList.remove('hidden');
+    testAnswers = {};
+    testSubmitted = false;
+    loadTest();
+  });
+
+  function startTest() {
+    if (!testQuestions.length) return;
+    document.getElementById('test-intro-panel').classList.add('hidden');
+    const qPanel = document.getElementById('test-questions-panel');
+    qPanel.classList.add('active');
+    currentQ = 0;
+    testAnswers = {};
+    testSubmitted = false;
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const total = testQuestions.length;
+    const q     = testQuestions[currentQ];
+    const pct   = ((currentQ + 1) / total) * 100;
+
+    document.getElementById('test-progress-fill').style.width = pct + '%';
+    document.getElementById('q-counter').textContent = `${currentQ + 1} / ${total}`;
+    document.getElementById('prev-q-btn').disabled = currentQ === 0;
+
+    const isLast = currentQ === total - 1;
+    const nextBtn   = document.getElementById('next-q-btn');
+    const submitBtn = document.getElementById('submit-test-btn');
+    nextBtn.style.display   = isLast ? 'none'   : 'inline-block';
+    submitBtn.style.display = isLast ? 'inline-block' : 'none';
+
+    const chosen = testAnswers[currentQ];
+
+    const optHtml = Object.entries(q.options).map(([letter, text]) => {
+      if (!text) return '';
+      let cls = '';
+      if (testSubmitted) {
+        if (letter === q.correct) cls = 'correct';
+        else if (letter === chosen && chosen !== q.correct) cls = 'wrong';
+      } else if (letter === chosen) cls = 'selected';
+
+      return `
+        <li class="option-item ${cls}" data-letter="${letter}" onclick="chooseOption(${currentQ},'${letter}')">
+          <span class="option-radio"></span>
+          <span><strong>${letter}.</strong> ${text}</span>
+        </li>`;
+    }).join('');
+
+    document.getElementById('questions-list').innerHTML = `
+      <div class="question-card">
+        <div class="q-num">Вопрос ${currentQ + 1}</div>
+        <div class="q-text">${q.q}</div>
+        <ul class="options-list">${optHtml}</ul>
+      </div>`;
+  }
+
+  function chooseOption(qIdx, letter) {
+    if (testSubmitted) return;
+    testAnswers[qIdx] = letter;
+    renderQuestion();
+  }
+
+  document.getElementById('prev-q-btn').addEventListener('click', () => {
+    if (currentQ > 0) { currentQ--; renderQuestion(); }
+  });
+  document.getElementById('next-q-btn').addEventListener('click', () => {
+    if (currentQ < testQuestions.length - 1) { currentQ++; renderQuestion(); }
+  });
+  document.getElementById('submit-test-btn').addEventListener('click', submitTest);
+
+  async function submitTest() {
+    const answered = Object.keys(testAnswers).length;
+    const total    = testQuestions.length;
+    if (answered < total) {
+      if (!confirm(`Вы ответили на ${answered} из ${total} вопросов. Завершить тест?`)) return;
+    }
+
+    testSubmitted = true;
+
+    // calc score
+    let correct = 0;
+    testQuestions.forEach((q, i) => { if (testAnswers[i] === q.correct) correct++; });
+    const pct   = Math.round((correct / total) * 100);
+    const grade = calcGrade(pct);
+
+    // show result
+    document.getElementById('test-questions-panel').classList.remove('active');
+    const res = document.getElementById('test-result');
+    res.classList.add('active');
+    document.getElementById('result-score').textContent  = correct;
+    document.getElementById('result-total').textContent  = `из ${total}`;
+    document.getElementById('result-grade').textContent  = grade;
+    document.getElementById('result-title').textContent  = gradeTitle(grade);
+    document.getElementById('result-subtitle').textContent = `${pct}% правильных ответов`;
+
+    // save to Ответы
+    const st = getStudent();
+    try {
+      await postAnswer({
+        id:       st.id,
+        name:     st.name,
+        group:    st.group,
+        razdel:   'Тест Практика',
+        tema:     'Все темы',
+        exercise: '—',
+        answer:   `${correct}/${total}`,
+        grade:    pct + '%',
+        comment:  `Оценка: ${grade}`,
+        date:     new Date().toLocaleString('ru-RU')
+      });
+    } catch(e) { /* non-critical */ }
+  }
+
+  function calcGrade(pct) {
+    if (pct >= 86) return '5';
+    if (pct >= 71) return '4';
+    if (pct >= 56) return '3';
+    return '2';
+  }
+  function gradeTitle(g) {
+    return { '5':'Отлично!', '4':'Хорошо!', '3':'Удовлетворительно', '2':'Нужно повторить' }[g] || '';
+  }
+
+  function shuffleArray(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  // ══════════════════════════════════════════════════
+  //  INIT
+  // ══════════════════════════════════════════════════
+  loadPractice();
+  loadTest();
+  </script>
+
+<footer><div class="footer-logo">⚖️ LegalLinguoLab</div><p class="footer-text">© 2026 Пулатова У.Р. — Образовательная платформа юридического языка · <a href="https://legallinguolab.uz">legallinguolab.uz</a></p></footer>
+</body>
+</html>

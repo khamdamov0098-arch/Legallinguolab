@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <title>Об авторе — LegalLinguoLab</title>
+  <link rel="icon" href="logo.jpg"/>
+  <link rel="stylesheet" href="shared.css"/>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<header>
+  <div class="header-inner">
+    <a class="logo" href="index.html">
+      <img src="logo.jpg" alt="LegalLinguoLab">
+      <div><div class="logo-text">Legal<span>Linguo</span>Lab</div><span class="logo-sub">Образовательная платформа юридического языка</span></div>
+    </a>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    <nav class="header-nav">
+      <a href="index.html">Главная</a>
+      <div class="dropdown"><a href="#">Обучение ▾</a><div class="dropdown-menu">
+        <a href="teoria.html"><span class="dm-icon">📚</span>Теория</a>
+        <a href="praktika.html"><span class="dm-icon">✍️</span>Практика</a>
+        <a href="kontrol.html"><span class="dm-icon">🎯</span>Контроль</a>
+      </div></div>
+      <div class="dropdown"><a href="#">Материалы ▾</a><div class="dropdown-menu">
+        <a href="literatura.html"><span class="dm-icon">📖</span>Учебная литература</a>
+        <a href="about.html"><span class="dm-icon">ℹ️</span>О платформе</a>
+      </div></div>
+      <a href="grades.html">📊 Мои оценки</a>
+      <a href="muallif.html" class="active">👤 Об авторе</a>
+    </nav>
+    <div id="navUserBlock"></div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">🏠 Главная</a>
+    <div class="mobile-section-label">Обучение</div>
+    <a href="teoria.html">📚 Теория</a>
+    <a href="praktika.html">✍️ Практика</a>
+    <a href="kontrol.html">🎯 Контроль</a>
+    <div class="mobile-section-label">Материалы</div>
+    <a href="literatura.html">📖 Учебная литература</a>
+    <a href="about.html">ℹ️ О платформе</a>
+    <div class="mobile-section-label">Другое</div>
+    <a href="grades.html">📊 Мои оценки</a>
+    <a href="muallif.html" class="active">👤 Об авторе</a>
+    <div id="mobileUserBlock"></div>
+  </div>
+</header>
+
+<div class="page-header"><h1>👤 Об авторе</h1><p>Автор платформы LegalLinguoLab</p></div>
+<div class="main">
+  <div class="author-profile">
+    <div class="author-profile-card">
+      <div class="author-profile-head">
+        <div class="author-page-avatar">👩‍🏫</div>
+        <div>
+          <div class="author-profile-name">Пулатова Умида Рамазоновна</div>
+          <div class="author-profile-title">И.о. доцента кафедры Узбекского языка и литературы ТГЮУ</div>
+          <div class="author-profile-tags">
+            <span>ТГЮУ</span>
+            <span>65+ научных статей</span>
+            <span>4 учебных пособия</span>
+          </div>
+        </div>
+      </div>
+      <div class="author-profile-body">
+        <div class="author-profile-stats">
+          <div class="author-profile-stat"><div class="num">65+</div><div class="lbl">Научных статей</div></div>
+          <div class="author-profile-stat"><div class="num">4</div><div class="lbl">Учебных пособия</div></div>
+          <div class="author-profile-stat"><div class="num">ТГЮУ</div><div class="lbl">Университет</div></div>
+        </div>
+        <p class="author-profile-bio">Автор учебных пособий «Практикум по составлению процессуальных документов» (2022), «Совершенствуем практику составления документов» (2024), электронного учебника (свид. № DGU 15984) и Smart-учебника (свид. № DGU 26854).</p>
+        <p class="author-profile-bio">Ведёт исследование на тему «Лингвометодические основы совершенствования у студентов-юристов навыков составления процессуальных документов».</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-logo">⚖️ LegalLinguoLab</div><p class="footer-text">© 2026 Пулатова У.Р. — Образовательная платформа юридического языка · <a href="https://legallinguolab.uz">legallinguolab.uz</a></p></footer>
+<div class="modal-overlay" id="modalOverlay" onclick="closePDF(event)"><div class="modal"><div class="modal-head"><span id="modalTitle">Документ</span><div class="modal-head-actions"><a class="modal-dl-btn" id="modalDlBtn" href="#" download>⬇ Скачать</a><button class="modal-close" onclick="closePDF(event)">✕</button></div></div><iframe id="modalFrame" src=""></iframe></div></div>
+<script src="icons.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>
