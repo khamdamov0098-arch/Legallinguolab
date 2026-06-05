@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <title>Войти — LegalLinguoLab</title>
+  <link rel="icon" href="logo.jpg"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+body{background:linear-gradient(135deg,#0d1f3c 0%,#1a3260 100%);min-height:100vh;display:flex;flex-direction:column;}
+.auth-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:1.5rem;}
+.auth-card{background:white;border-radius:20px;padding:2.4rem 2rem;width:100%;max-width:440px;box-shadow:0 24px 80px rgba(0,0,0,0.4);}
+.auth-logo{text-align:center;margin-bottom:1.8rem;}
+.auth-logo img{width:72px;height:72px;object-fit:contain;border-radius:50%;margin-bottom:0.6rem;border:2px solid var(--border);}
+.auth-logo h1{font-family:"Playfair Display",serif;font-size:1.4rem;font-weight:900;color:var(--navy);}
+.auth-logo p{font-size:0.82rem;color:var(--gray);margin-top:0.2rem;}
+.auth-title{font-family:"Playfair Display",serif;font-size:1.5rem;font-weight:900;color:var(--navy);margin-bottom:1.5rem;text-align:center;}
+.field{margin-bottom:1rem;}
+.field label{display:block;font-size:0.84rem;font-weight:700;color:var(--text);margin-bottom:0.4rem;}
+.field input{width:100%;padding:0.85rem 1rem;border:1.5px solid var(--border2);border-radius:10px;font-size:0.97rem;font-family:"Raleway",sans-serif;outline:none;transition:border-color 0.2s;color:var(--text);}
+.field input:focus{border-color:var(--gold);}
+.field-hint{font-size:0.75rem;color:var(--gray);margin-top:0.3rem;}
+.warn-box{background:#fef9e7;border:1px solid #f0d080;color:#7d5608;border-radius:8px;padding:0.7rem 1rem;font-size:0.8rem;margin-bottom:1.2rem;}
+.btn-auth{width:100%;padding:0.95rem;border-radius:10px;font-size:1rem;font-weight:800;cursor:pointer;font-family:"Raleway",sans-serif;transition:all 0.2s;margin-top:0.5rem;border:none;}
+.btn-navy{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:white;box-shadow:0 4px 15px rgba(13,31,60,0.3);}
+.btn-navy:hover{opacity:0.9;}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);box-shadow:0 4px 15px rgba(201,168,76,0.35);}
+.btn-gold:hover{transform:translateY(-1px);box-shadow:0 8px 25px rgba(201,168,76,0.45);}
+.btn-auth:disabled{opacity:0.55;cursor:not-allowed;transform:none !important;}
+.auth-error{background:#fdecea;border:1px solid #f5b7b1;color:#922b21;border-radius:8px;padding:0.75rem 1rem;font-size:0.85rem;margin-bottom:1rem;display:none;}
+.auth-error.show{display:block;}
+.auth-success{background:#d5f5e3;border:1px solid #a9dfbf;color:#1e8449;border-radius:8px;padding:0.75rem 1rem;font-size:0.85rem;margin-bottom:1rem;display:none;}
+.auth-success.show{display:block;}
+.auth-divider{text-align:center;color:var(--gray);font-size:0.82rem;margin:1.2rem 0;position:relative;}
+.auth-divider::before,.auth-divider::after{content:"";position:absolute;top:50%;width:40%;height:1px;background:var(--border2);}
+.auth-divider::before{left:0;}.auth-divider::after{right:0;}
+.btn-alt{width:100%;background:transparent;color:var(--navy);border:1.5px solid var(--border2);padding:0.85rem;border-radius:10px;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:"Raleway",sans-serif;text-decoration:none;display:block;text-align:center;transition:all 0.2s;}
+.btn-alt:hover{border-color:var(--navy);background:var(--bg);}
+.back-link{display:block;text-align:center;margin-top:1.2rem;color:rgba(255,255,255,0.65);font-size:0.82rem;text-decoration:none;}
+.back-link:hover{color:white;}
+footer{background:transparent;color:rgba(255,255,255,0.35);padding:1rem;font-size:0.75rem;text-align:center;}
+footer a{color:rgba(255,255,255,0.55);text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<header>
+  <div class="header-inner">
+    <a class="logo" href="index.html">
+      <img src="logo.jpg" alt="LegalLinguoLab">
+      <div>
+        <div class="logo-text">Legal<span>Linguo</span>Lab</div>
+        <span class="logo-sub">Образовательная платформа юридического языка</span>
+      </div>
+    </a>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    <nav class="header-nav">
+      <a href="index.html">Главная</a>
+      <div class="dropdown">
+        <a href="#">Обучение ▾</a>
+        <div class="dropdown-menu">
+          <a href="teoria.html"><span class="dm-icon">📚</span>Теория</a>
+          <a href="praktika.html"><span class="dm-icon">✍️</span>Практика</a>
+          <a href="kontrol.html"><span class="dm-icon">🎯</span>Контроль</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <a href="#">Материалы ▾</a>
+        <div class="dropdown-menu">
+          <a href="literatura.html"><span class="dm-icon">📖</span>Учебная литература</a>
+          <a href="about.html"><span class="dm-icon">ℹ️</span>О платформе</a>
+        </div>
+      </div>
+      <a href="grades.html">📊 Мои оценки</a>
+      <a href="muallif.html">👤 Об авторе</a>
+    </nav>
+    <div id="navUserBlock"></div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">🏠 Главная</a>
+    <div class="mobile-section-label">Обучение</div>
+    <a href="teoria.html">📚 Теория</a>
+    <a href="praktika.html">✍️ Практика</a>
+    <a href="kontrol.html">🎯 Контроль</a>
+    <div class="mobile-section-label">Материалы</div>
+    <a href="literatura.html">📖 Учебная литература</a>
+    <a href="about.html">ℹ️ О платформе</a>
+    <div class="mobile-section-label">Другое</div>
+    <a href="grades.html">📊 Мои оценки</a>
+    <a href="muallif.html">👤 Об авторе</a>
+    <div id="mobileUserBlock"></div>
+  </div>
+</header>
+
+<div class="auth-wrap"><div>
+<div class="auth-card">
+  <div class="auth-logo"><img src="logo.jpg" alt="LegalLinguoLab"><h1>LegalLinguoLab</h1><p>Образовательная платформа юридического языка</p></div>
+  <div class="auth-title">Войти в систему</div>
+  <div class="auth-error" id="errBox"></div>
+  <div class="field">
+    <label>📱 Номер телефона</label>
+    <input type="tel" id="telInp" placeholder="+998901234567" autocomplete="tel"/>
+    <div class="field-hint">Введите номер, указанный при регистрации</div>
+  </div>
+  <button class="btn-auth btn-navy" id="loginBtn" onclick="doLogin()">Войти →</button>
+  <div class="auth-divider">или</div>
+  <a href="register.html" class="btn-alt">Зарегистрироваться</a>
+</div>
+<a href="index.html" class="back-link">← На главную</a>
+</div></div>
+
+<footer>
+  <div class="footer-logo">⚖️ LegalLinguoLab</div>
+  <p class="footer-text">© 2026 Пулатова У.Р. — Образовательная платформа юридического языка · <a href="https://legallinguolab.uz">legallinguolab.uz</a></p>
+</footer>
+<div class="modal-overlay" id="modalOverlay" onclick="closePDF(event)">
+  <div class="modal"><div class="modal-head"><span id="modalTitle">Документ</span><div class="modal-head-actions"><a class="modal-dl-btn" id="modalDlBtn" href="#" download>⬇ Скачать</a><button class="modal-close" onclick="closePDF(event)">✕</button></div></div><iframe id="modalFrame" src=""></iframe></div>
+</div>
+<script src="icons.js"></script>
+<script src="nav.js"></script>
+<script>
+if(localStorage.getItem('lll_user'))window.location.href='index.html';
+document.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+function showErr(m){const b=document.getElementById('errBox');b.textContent='❌ '+m;b.classList.add('show');}
+function finishLogin(user){
+  localStorage.setItem('lll_user',JSON.stringify(user));
+  window.location.href='index.html';
+}
+async function doLogin(){
+  const tel=normalizePhone(document.getElementById('telInp').value.trim());
+  document.getElementById('telInp').value=tel;
+  if(!tel)return showErr('Введите номер телефона');
+  if(!tel.startsWith('+998')||tel.length!==13)return showErr('Формат: +998XXXXXXXXX');
+  const btn=document.getElementById('loginBtn');
+  btn.disabled=true;btn.textContent='Проверка...';
+  if(isBackendReady()){
+    try{
+      const res=await fetch(SCRIPT_URL+'?action=login&telefon='+encodeURIComponent(tel));
+      const data=await res.json();
+      // data.success yoki data.ok ikkalasini ham tekshirish
+      if(data.success || data.ok){
+        const name  = data.name  || '';
+        const group = data.group || '';
+        const id    = data.id    || tel;
+        saveLocalUser(tel, name, group);
+        finishLogin({ id, name, group, telefon: tel });
+        return;
+      }
+      // Server javob berdi lekin foydalanuvchi topilmadi
+      showErr('Пользователь не найден. Зарегистрируйтесь.');
+      btn.disabled=false; btn.textContent='Войти →';
+      return;
+    }catch(e){
+      console.log('Server xato:', e.message);
+    }
+  }
+  // Offline: localStorage dan qidirish
+  const local=findLocalUser(tel);
+  if(local){
+    finishLogin({name:local.name,group:local.group,telefon:tel});
+    return;
+  }
+  showErr('Пользователь не найден. Зарегистрируйтесь.');
+  btn.disabled=false;btn.textContent='Войти →';
+}
+</script>
+</body>
+</html>

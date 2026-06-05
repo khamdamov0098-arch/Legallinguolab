@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Мои оценки — LegalLinguoLab</title>
+  <link rel="stylesheet" href="shared.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    .grades-hero {
+      background: var(--navy);
+      padding: 52px 0 36px;
+      text-align: center;
+    }
+    .grades-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+    .grades-hero p {
+      font-family: 'Raleway', sans-serif;
+      color: rgba(255,255,255,0.65);
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    .grades-wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+    }
+
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: #fff;
+      border: 1px solid #e8eaf0;
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(13,31,60,0.05);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-num span { color: var(--gold); }
+    .stat-label {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.78rem;
+      color: #888;
+      font-weight: 500;
+    }
+
+    /* Grades list */
+    .grades-card {
+      background: #fff;
+      border: 1px solid #e8eaf0;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(13,31,60,0.06);
+    }
+    .grades-card-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid #f0f2f8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .grades-card-header h2 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0;
+    }
+
+    .grade-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid #f5f6fa;
+      gap: 16px;
+      transition: background 0.15s;
+    }
+    .grade-item:last-child { border-bottom: none; }
+    .grade-item:hover { background: #fafbff; }
+
+    .grade-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .badge-5 { background: #eafaf1; color: #1e8449; }
+    .badge-4 { background: #eef9fc; color: #0e6985; }
+    .badge-3 { background: #fef9e7; color: #9a7d0a; }
+    .badge-2 { background: #fdedec; color: #c0392b; }
+    .badge-x { background: #f5f6fa; color: #aaa; }
+
+    .grade-info { flex: 1; min-width: 0; }
+    .grade-tema {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .grade-razdel {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.78rem;
+      color: #999;
+    }
+    .grade-comment {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.82rem;
+      color: #666;
+      margin-top: 4px;
+    }
+    .grade-date {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.75rem;
+      color: #bbb;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Empty / Loading */
+    .state-msg {
+      text-align: center;
+      padding: 48px 20px;
+      font-family: 'Raleway', sans-serif;
+      color: #aaa;
+      font-size: 0.95rem;
+    }
+    .state-msg .icon { font-size: 2.5rem; margin-bottom: 12px; }
+
+    /* Razdel bo'sh holati */
+    .razdel-empty {
+      padding: 20px 24px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.85rem;
+      color: #bbb;
+      text-align: center;
+    }
+
+    /* Not logged in */
+    .login-prompt {
+      background: #fff;
+      border: 1px solid #e8eaf0;
+      border-radius: 14px;
+      padding: 48px 24px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(13,31,60,0.06);
+    }
+    .login-prompt p {
+      font-family: 'Raleway', sans-serif;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .btn-login-prompt {
+      display: inline-block;
+      background: var(--navy);
+      color: #fff;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 11px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-login-prompt:hover { background: #1a3260; }
+
+
+
+    /* Modal (nav.js uchun) */
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(10,20,45,0.7); z-index:9999; align-items:center; justify-content:center; padding:16px; }
+    .modal-overlay.open { display:flex; }
+    .modal-box { background:#fff; border-radius:14px; width:100%; max-width:900px; height:90vh; display:flex; flex-direction:column; overflow:hidden; }
+    .modal-header { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid #e8eaf0; flex-shrink:0; }
+    .modal-title { font-family:'Raleway',sans-serif; font-size:0.95rem; font-weight:700; color:var(--navy); }
+    .modal-dl { font-family:'Raleway',sans-serif; font-size:0.82rem; font-weight:600; color:var(--navy); text-decoration:none; padding:5px 12px; border:1px solid #dde0e8; border-radius:6px; }
+    .modal-close { background:#f0f2f8; border:none; width:32px; height:32px; border-radius:50%; font-size:0.9rem; cursor:pointer; color:#555; }
+    .modal-frame { flex:1; border:none; width:100%; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img src="logo.jpg" alt="LegalLinguoLab">
+      <div>
+        <div class="logo-text">Legal<span>Linguo</span>Lab</div>
+        <span class="logo-sub">Образовательная платформа юридического языка</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="teoria.html">📚 Теория</a>
+      <a href="praktika.html">✍️ Практика</a>
+      <a href="kontrol.html">🎯 Контроль</a>
+      <a href="grades.html" class="active">📊 Оценки</a>
+      <a href="literatura.html">📖 Литература</a>
+    </nav>
+    <div id="navUserBlock"></div>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="teoria.html">📚 Теория</a>
+    <a href="praktika.html">✍️ Практика</a>
+    <a href="kontrol.html">🎯 Контроль</a>
+    <a href="grades.html" class="active">📊 Оценки</a>
+    <a href="literatura.html">📖 Литература</a>
+    <div id="mobileUserBlock"></div>
+  </div>
+</header>
+
+<!-- PDF MODAL -->
+<div id="modalOverlay" class="modal-overlay" onclick="closePDF(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span id="modalTitle" class="modal-title"></span>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <a id="modalDlBtn" href="#" download class="modal-dl">⬇ Скачать</a>
+        <button class="modal-close" onclick="closePDF(event)">✕</button>
+      </div>
+    </div>
+    <iframe id="modalFrame" class="modal-frame" src="" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="grades-hero">
+  <h1 class="page-header">📊 Мои оценки</h1>
+  <p>Лучшие результаты по каждому разделу</p>
+</section>
+
+<!-- CONTENT -->
+<main class="grades-wrap" id="gradesMain">
+  <div class="state-msg"><div class="icon">⏳</div>Загрузка...</div>
+</main>
+
+<footer style="background:var(--navy);color:rgba(255,255,255,0.5);text-align:center;padding:24px 20px;font-family:'Raleway',sans-serif;font-size:0.82rem;"><div style="font-size:1rem;margin-bottom:6px;color:rgba(255,255,255,0.8);">⚖️ LegalLinguoLab</div>© 2026 Пулатова У.Р. — Образовательная платформа юридического языка · <a href="https://legallinguolab.uz" style="color:var(--gold);">legallinguolab.uz</a></footer>
+
+<script src="icons.js"></script>
+<script src="nav.js"></script>
+<script>
+function formatDate(d) {
+  if (!d) return '';
+  // ISO format: 2026-05-26T04:39:00.000Z → 26.05.2026 09:39
+  try {
+    const dt = new Date(d);
+    if (!isNaN(dt.getTime())) {
+      const day  = String(dt.getDate()).padStart(2, '0');
+      const mon  = String(dt.getMonth() + 1).padStart(2, '0');
+      const year = dt.getFullYear();
+      const h    = String(dt.getHours()).padStart(2, '0');
+      const m    = String(dt.getMinutes()).padStart(2, '0');
+      return day + '.' + mon + '.' + year + ' ' + h + ':' + m;
+    }
+  } catch(e) {}
+  // Agar allaqachon dd.MM.yyyy formatida bo'lsa — shundayligicha
+  return d;
+}
+
+const SCRIPT = 'https://script.google.com/macros/s/AKfycbzjMtjRzo2_T4CWVGIFg9ErQxHyKVwDwFJlJkgpm7rSsQAaBbq_ozX-NajZYwUmICp1Tw/exec';
+
+window.addEventListener('DOMContentLoaded', function() {
+  const raw = localStorage.getItem('lll_user');
+  if (!raw) {
+    showLoginPrompt();
+    return;
+  }
+  const user = JSON.parse(raw);
+  loadGrades(user.name, user.group);
+});
+
+function showLoginPrompt() {
+  document.getElementById('gradesMain').innerHTML = `
+    <div class="login-prompt">
+      <p>Оценки доступны только авторизованным студентам.</p>
+      <a href="login.html" class="btn-login-prompt">Войти →</a>
+    </div>`;
+}
+
+async function loadGrades(name, group) {
+  const main = document.getElementById('gradesMain');
+  try {
+    const resp = await fetch(SCRIPT + '?action=getGrades&name=' + encodeURIComponent(name));
+    const data = await resp.json();
+
+    if (!data.grades || data.grades.length === 0) {
+      main.innerHTML =
+        '<div class="state-msg">' +
+        '<div class="icon">📭</div>' +
+        'Оценок пока нет.<br>' +
+        '<small style="font-size:0.82rem;">Выполните задания и дождитесь проверки.</small>' +
+        '</div>';
+      return;
+    }
+
+    // Har bir tema bo'yicha faqat ENG YAXSHI natijani olish
+    // Казус uchun fayl nomi (uprazhnenie) key ga kirmaydi — faqat razdel+tema
+    const bestByTema = {};
+    data.grades.forEach(function(g) {
+      var tema = (g.tema || '');
+
+      // Tema nomlarini normalize qilish (eski va yangi versiyalar)
+      var temaNorm = tema
+        .replace(/\s*\(44 вопроса\)/gi, '')
+        .replace(/\s*\(20 вопросов\)/gi, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      var isKazus = temaNorm.toLowerCase().indexOf('казус') !== -1;
+      var key = (g.razdel || '') + '|' + temaNorm + (isKazus ? '' : '|' + (g.uprazhnenie || ''));
+      var score = Number(g.ocenka) || 0;
+      var prevScore = Number((bestByTema[key] || {}).ocenka || 0);
+      if (!bestByTema[key] || score > prevScore || score === prevScore) {
+        // Baholar teng bo'lsa — eng yangisini (oxirgi yozuvni) saqlaymiz
+        var gCopy = Object.assign({}, g, { tema: temaNorm });
+        bestByTema[key] = gCopy;
+      }
+    });
+    const grades = Object.values(bestByTema);
+
+    // Faqat o'qituvchi baholagan (2,3,4,5) natijalar statistikasi uchun
+    const graded = grades.filter(g => [2,3,4,5].includes(Number(g.ocenka)));
+    const total  = grades.length;
+    const avg    = graded.length
+      ? (graded.reduce((s,g) => s + Number(g.ocenka), 0) / graded.length).toFixed(1)
+      : '—';
+    const best   = graded.length ? Math.max(...graded.map(g => Number(g.ocenka))) : '—';
+
+    // Razdellar bo'yicha guruhlash
+    const RAZDELS = ['Теория', 'Практика', 'Контроль'];
+    const razdel_icons = { 'Теория': '📚', 'Практика': '✍️', 'Контроль': '🎯' };
+
+    const byRazdel = {};
+    RAZDELS.forEach(r => { byRazdel[r] = []; });
+
+    grades.forEach(function(g) {
+      const r = g.razdel || 'Другое';
+      if (!byRazdel[r]) byRazdel[r] = [];
+      byRazdel[r].push(g);
+    });
+
+    // HTML yasash
+    let html = '<div class="stats-grid">' +
+      '<div class="stat-card"><div class="stat-num">' + total + '</div><div class="stat-label">Выполнено заданий</div></div>' +
+      '<div class="stat-card"><div class="stat-num"><span>' + avg + '</span></div><div class="stat-label">Средний балл</div></div>' +
+      '<div class="stat-card"><div class="stat-num"><span>' + best + '</span></div><div class="stat-label">Лучшая оценка</div></div>' +
+      '</div>';
+
+    // Har bir razdel uchun kartochka
+    RAZDELS.forEach(function(razdel) {
+      const items = byRazdel[razdel] || [];
+      const icon  = razdel_icons[razdel] || '📋';
+
+      // Razdel statistikasi
+      const rGraded = items.filter(g => [2,3,4,5].includes(Number(g.ocenka)));
+      const rAvg    = rGraded.length
+        ? (rGraded.reduce((s,g) => s + Number(g.ocenka), 0) / rGraded.length).toFixed(1)
+        : null;
+
+      html += '<div class="grades-card" style="margin-bottom:20px;">' +
+        '<div class="grades-card-header">' +
+        '<h2>' + icon + ' ' + razdel + (rAvg ? ' <span style="font-size:0.8rem;color:var(--gold);font-weight:500;margin-left:8px;">Ср. балл: ' + rAvg + '</span>' : '') + '</h2>' +
+        '</div>';
+
+      if (items.length === 0) {
+        html += '<div class="state-msg" style="padding:24px 20px;font-size:0.85rem;">Нет выполненных заданий</div>';
+      } else {
+        items.forEach(function(g) {
+          html += gradeItemHTML(g);
+        });
+      }
+      html += '</div>';
+    });
+
+    main.innerHTML = html;
+
+  } catch(err) {
+    main.innerHTML =
+      '<div class="state-msg">' +
+      '<div class="icon">⚠️</div>' +
+      'Ошибка загрузки оценок.<br>' +
+      '<small style="font-size:0.82rem;">' + err.message + '</small>' +
+      '</div>';
+  }
+}
+
+function gradeItemHTML(g) {
+  const ocenka   = g.ocenka ? String(g.ocenka).trim() : '';
+  const num      = Number(ocenka);
+  let   badgeClass = 'badge-x', badgeText = '—';
+  if (num === 5)      { badgeClass = 'badge-5'; badgeText = '5'; }
+  else if (num === 4) { badgeClass = 'badge-4'; badgeText = '4'; }
+  else if (num === 3) { badgeClass = 'badge-3'; badgeText = '3'; }
+  else if (num === 2) { badgeClass = 'badge-2'; badgeText = '2'; }
+  else if (ocenka)    { badgeText = ocenka; }
+
+  const razdel  = g.razdel       || '';
+  const tema    = g.tema         || '';
+  const uprazh  = g.uprazhnenie  || '';
+  const comment = g.kommentariy  || '';
+  const date    = g.date         || '';
+
+  const isKazus     = tema.toLowerCase().indexOf('казус') !== -1;
+  const isPraktika  = razdel === 'Практика';
+  const isTematTest = tema.toLowerCase().indexOf('тест') !== -1 || uprazh === 'Итоговый тест' || uprazh === '—';
+
+  // Ko'rsatiladigan sarlavha
+  let displayTitle = '';
+  if (isPraktika && !isTematTest) {
+    // Практика mashqlari: "Тема 5 · Упражнение 1"
+    displayTitle = 'Тема ' + tema + (uprazh && uprazh !== '—' ? ' · Упражнение ' + uprazh : '');
+  } else if (isKazus) {
+    displayTitle = tema;
+  } else {
+    displayTitle = tema + (uprazh && uprazh !== '—' && uprazh !== 'Итоговый тест' ? ' · ' + uprazh : '');
+  }
+
+  // Pending badge — praktika ham, kazus ham
+  const isPending = !ocenka || ocenka === '';
+  const pendingBadge = isPending
+    ? '<span style="font-family:Raleway,sans-serif;font-size:0.75rem;color:#BA7517;background:#FAEEDA;padding:2px 8px;border-radius:20px;margin-left:8px;">Ожидает проверки</span>'
+    : '';
+
+  // Praktika uchun javob matni (comment o'rnida qisqa ko'rsatish)
+  const answerPreview = isPraktika && !isTematTest && g.otvet
+    ? '<div class="grade-comment">✏️ ' + String(g.otvet).slice(0, 80) + (String(g.otvet).length > 80 ? '...' : '') + '</div>'
+    : '';
+
+  return '<div class="grade-item">' +
+    '<div class="grade-badge ' + badgeClass + '">' + badgeText + '</div>' +
+    '<div class="grade-info">' +
+      '<div class="grade-tema">' + displayTitle + (isPending ? pendingBadge : '') + '</div>' +
+      (comment ? '<div class="grade-comment">💬 ' + comment + '</div>' : answerPreview) +
+    '</div>' +
+    '<div class="grade-date">' + formatDate(date) + '</div>' +
+    '</div>';
+}
+</script>
+</body>
+</html>

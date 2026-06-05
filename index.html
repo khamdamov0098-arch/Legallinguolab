@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru" prefix="og: https://ogp.me/ns#">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <title>LegalLinguoLab — Образовательная платформа юридического языка</title>
+  <meta name="description" content="LegalLinguoLab — цифровая образовательная платформа для изучения языка юридических процессуальных документов. Для студентов-юристов ТГЮУ."/>
+  <meta name="keywords" content="юридический язык, процессуальные документы, ТГЮУ, LegalLinguoLab, обучение юристов, юридическое письмо"/>
+  <meta name="author" content="Пулатова Умида Рамазоновна"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://legallinguolab.uz"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="LegalLinguoLab — Образовательная платформа юридического языка"/>
+  <meta property="og:description" content="Платформа изучения языка процессуальных документов. 10 тем, практические упражнения, тесты и оценка преподавателя."/>
+  <meta property="og:url" content="https://legallinguolab.uz"/>
+  <meta property="og:image" content="https://legallinguolab.uz/logo.jpg"/>
+  <meta property="og:locale" content="ru_RU"/>
+  <meta name="twitter:card" content="summary"/>
+  <meta name="twitter:title" content="LegalLinguoLab"/>
+  <meta name="twitter:description" content="Платформа изучения языка процессуальных документов для студентов-юристов."/>
+  <link rel="icon" href="logo.jpg"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    a.topic-card { text-decoration: none; color: inherit; display: flex; cursor: pointer; }
+    a.topic-card:hover { border-color: var(--gold, #c9a84c); box-shadow: 0 4px 16px rgba(201,168,76,.2); transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<header>
+  <div class="header-inner">
+    <a class="logo" href="index.html">
+      <img src="logo.jpg" alt="LegalLinguoLab">
+      <div><div class="logo-text">Legal<span>Linguo</span>Lab</div><span class="logo-sub">Образовательная платформа юридического языка</span></div>
+    </a>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    <nav class="header-nav">
+      <a href="index.html" class="active">Главная</a>
+      <div class="dropdown"><a href="#">Обучение ▾</a><div class="dropdown-menu">
+        <a href="teoria.html"><span class="dm-icon">📚</span>Теория</a>
+        <a href="praktika.html"><span class="dm-icon">✍️</span>Практика</a>
+        <a href="kontrol.html"><span class="dm-icon">🎯</span>Контроль</a>
+      </div></div>
+      <div class="dropdown"><a href="#">Материалы ▾</a><div class="dropdown-menu">
+        <a href="literatura.html"><span class="dm-icon">📖</span>Учебная литература</a>
+        <a href="about.html"><span class="dm-icon">ℹ️</span>О платформе</a>
+      </div></div>
+      <a href="grades.html">📊 Мои оценки</a>
+      <a href="muallif.html">👤 Об авторе</a>
+    </nav>
+    <div id="navUserBlock"></div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="active">🏠 Главная</a>
+    <div class="mobile-section-label">Обучение</div>
+    <a href="teoria.html">📚 Теория</a>
+    <a href="praktika.html">✍️ Практика</a>
+    <a href="kontrol.html">🎯 Контроль</a>
+    <div class="mobile-section-label">Материалы</div>
+    <a href="literatura.html">📖 Учебная литература</a>
+    <a href="about.html">ℹ️ О платформе</a>
+    <div class="mobile-section-label">Другое</div>
+    <a href="grades.html">📊 Мои оценки</a>
+    <a href="muallif.html">👤 Об авторе</a>
+    <div id="mobileUserBlock"></div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">⚖️ Образовательная платформа · ТГЮУ</div>
+      <h1>Платформа изучения языка<br><span>процессуальных документов</span></h1>
+      <p>Освойте лексику, грамматику и стилистику официально-делового языка. Практикуйте составление реальных процессуальных документов под руководством преподавателя.</p>
+      <div class="hero-btns" id="heroBtns">
+        <a href="register.html" class="btn-primary" id="heroPrimaryBtn">Начать обучение →</a>
+        <a href="login.html" class="btn-secondary" id="heroLoginBtn">Войти в систему</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>📊 Статистика платформы</h3>
+      <div class="stat-grid">
+        <div class="stat-item"><div class="stat-num" id="stat-students">—</div><div class="stat-label">Студентов</div></div>
+        <div class="stat-item"><div class="stat-num" id="stat-answers">—</div><div class="stat-label">Ответов</div></div>
+        <div class="stat-item"><div class="stat-num">10</div><div class="stat-label">Тем</div></div>
+        <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Этапа</div></div>
+      </div>
+      <div class="topic-list"><div class="topic-item">📄 Постановление о возбуждении уголовного дела</div><div class="topic-item">📄 Постановление о задержании</div><div class="topic-item">📄 Постановление о привлечении в качестве обвиняемого</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--bg);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Структура курса</div>
+      <h2 class="section-title">Три этапа обучения</h2>
+      <p class="section-desc">Последовательное освоение юридического языка от теории к практике</p>
+    </div>
+    <div class="stages-grid">
+      <div class="stage-card"><div class="stage-card-top"><span class="stage-num">1</span><span class="stage-icon" aria-hidden="true">📚</span></div><h3>Теоретическая часть</h3><p>4 темы об основах процессуальных документов: виды, структура, язык и стиль. Тестовые задания.</p></div>
+      <div class="stage-card"><div class="stage-card-top"><span class="stage-num">2</span><span class="stage-icon" aria-hidden="true">✍️</span></div><h3>Практическая часть</h3><p>10 тем с упражнениями по реальным документам. Лексические, грамматические и стилистические задания.</p></div>
+      <div class="stage-card"><div class="stage-card-top"><span class="stage-num">3</span><span class="stage-icon" aria-hidden="true">🎯</span></div><h3>Контроль</h3><p>Казусы — составление документов в формате Word. Итоговые тесты и оценка преподавателем.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--bg2);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Практическая часть</div>
+      <h2 class="section-title">10 видов процессуальных документов</h2>
+      <p class="section-desc">Каждая тема посвящена конкретному виду документа</p>
+    </div>
+    <div class="topics-grid"><a class="topic-card" href="praktika.html#tema=5"><div class="topic-num">5</div><div class="topic-info"><h4>Тема 5: Постановление о возбуждении уголовного дела</h4><p>5 упражнений</p></div></a><a class="topic-card" href="praktika.html#tema=6"><div class="topic-num">6</div><div class="topic-info"><h4>Тема 6: Постановление о задержании</h4><p>5 упражнений</p></div></a><a class="topic-card" href="praktika.html#tema=7"><div class="topic-num">7</div><div class="topic-info"><h4>Тема 7: Постановление о привлечении в качестве обвиняемого</h4><p>5 упражнений</p></div></a><a class="topic-card" href="praktika.html#tema=8"><div class="topic-num">8</div><div class="topic-info"><h4>Тема 8: Постановление о производстве обыска</h4><p>5 упражнений</p></div></a><a class="topic-card" href="praktika.html#tema=9"><div class="topic-num">9</div><div class="topic-info"><h4>Тема 9: Постановление о производстве медицинской экспертизы</h4><p>5 упражнений</p></div></a><a class="topic-card" href="praktika.html#tema=10"><div class="topic-num">10</div><div class="topic-info"><h4>Тема 10: Протокол устного заявления</h4><p>5 упражнений</p></div></a><a class="topic-card" href="praktika.html#tema=11"><div class="topic-num">11</div><div class="topic-info"><h4>Тема 11: Протокол о задержании подозреваемого</h4><p>5 упражнений</p></div></a><a class="topic-card" href="praktika.html#tema=12"><div class="topic-num">12</div><div class="topic-info"><h4>Тема 12: Протокол допроса в качестве обвиняемого</h4><p>6 упражнений</p></div></a><a class="topic-card" href="praktika.html#tema=13"><div class="topic-num">13</div><div class="topic-info"><h4>Тема 13: Протокол о производстве обыска</h4><p>5 упражнений</p></div></a><a class="topic-card" href="praktika.html#tema=14"><div class="topic-num">14</div><div class="topic-info"><h4>Тема 14: Протокол осмотра места происшествия</h4><p>5 упражнений</p></div></a></div>
+  </div>
+</section>
+
+<section style="background:var(--white);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Рейтинг</div>
+      <h2 class="section-title">Таблица лидеров</h2>
+      <p class="section-desc">Студенты с наивысшим средним баллом</p>
+    </div>
+    <div class="leaderboard-table">
+      <div class="lb-header"><div>#</div><div>Студент</div><div>Группа</div><div>Средний балл</div><div>Заданий</div></div>
+      <div id="leaderboard-body"><div class="lb-empty">Данные появятся после начала обучения</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--bg2);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">О платформе</div>
+      <h2 class="section-title">LegalLinguoLab</h2>
+      <p class="section-desc">Образовательная цифровая платформа для изучения языка юридических процессуальных документов</p>
+    </div>
+    <div class="stages-grid">
+      <div class="stage-card feature-card"><div class="feature-icon" aria-hidden="true">⚖️</div><h3>Юридический язык</h3><p>Развитие профессиональной компетенции в сфере письменной коммуникации и работы с процессуальными документами.</p></div>
+      <div class="stage-card feature-card"><div class="feature-icon" aria-hidden="true">📝</div><h3>Практический подход</h3><p>Отработка типовых языковых конструкций при самостоятельном составлении документов различных видов.</p></div>
+      <div class="stage-card feature-card"><div class="feature-icon" aria-hidden="true">🎓</div><h3>Для студентов-юристов</h3><p>Последовательное совершенствование навыков профессионального юридического письма.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="author-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Преподаватель</div>
+      <h2 class="section-title">Об авторе</h2>
+    </div>
+    <div class="author-card">
+      <div class="author-avatar">👩‍🏫</div>
+      <div>
+        <div class="author-name">Пулатова Умида Рамазоновна</div>
+        <div class="author-title">И.о. доцента кафедры Узбекского языка и литературы ТГЮУ</div>
+        <p class="author-bio">Автор учебных пособий «Практикум по составлению процессуальных документов» (2022), «Совершенствуем практику составления документов» (2024), электронного учебника (свид. № DGU 15984) и Smart-учебника (свид. № DGU 26854).</p>
+        <div class="author-stats">
+          <div class="author-stat"><div class="author-stat-num">65+</div><div class="author-stat-label">Научных статей</div></div>
+          <div class="author-stat"><div class="author-stat-num">4</div><div class="author-stat-label">Учебных пособия</div></div>
+          <div class="author-stat"><div class="author-stat-num">ТГЮУ</div><div class="author-stat-label">Университет</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="footer-logo">⚖️ LegalLinguoLab</div><p class="footer-text">© 2026 Пулатова У.Р. — Образовательная платформа юридического языка · <a href="https://legallinguolab.uz">legallinguolab.uz</a></p></footer>
+<div class="modal-overlay" id="modalOverlay" onclick="closePDF(event)"><div class="modal"><div class="modal-head"><span id="modalTitle">Документ</span><div class="modal-head-actions"><a class="modal-dl-btn" id="modalDlBtn" href="#" download>⬇ Скачать</a><button class="modal-close" onclick="closePDF(event)">✕</button></div></div><iframe id="modalFrame" src=""></iframe></div></div>
+<script src="icons.js"></script>
+<script src="nav.js"></script>
+<script>
+const LLL_SCRIPT = 'https://script.google.com/macros/s/AKfycbzjMtjRzo2_T4CWVGIFg9ErQxHyKVwDwFJlJkgpm7rSsQAaBbq_ozX-NajZYwUmICp1Tw/exec';
+
+async function loadLeaderboard() {
+  try {
+    const res  = await fetch(LLL_SCRIPT + '?action=leaderboard');
+    const data = await res.json();
+
+    // Statistika
+    if (data.totalStudents) document.getElementById('stat-students').textContent = data.totalStudents;
+    if (data.totalAnswers)  document.getElementById('stat-answers').textContent  = data.totalAnswers;
+
+    const body = document.getElementById('leaderboard-body');
+
+    if (!data.leaders || !data.leaders.length) {
+      body.innerHTML = '<div class="lb-empty">Данные появятся после начала обучения</div>';
+      return;
+    }
+
+    const medals = ['🥇', '🥈', '🥉'];
+    body.innerHTML = data.leaders.map(function(l, i) {
+      var rank = i < 3 ? medals[i] : (i + 1);
+      return '<div class="lb-row">' +
+        '<div class="lb-rank rank-' + (i+1) + '">' + rank + '</div>' +
+        '<div class="lb-name">' + l.name + '</div>' +
+        '<div class="lb-group">' + l.group + '</div>' +
+        '<div class="lb-score">' + l.avgScore + '</div>' +
+        '<div class="lb-tasks">' + l.tasks + '</div>' +
+      '</div>';
+    }).join('');
+  } catch(e) {
+    console.log('Leaderboard xato:', e.message);
+  }
+}
+loadLeaderboard();
+</script>
+</body>
+</html>

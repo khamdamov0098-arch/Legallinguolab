@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Учебная литература — LegalLinguoLab</title>
+  <link rel="icon" href="logo.jpg"/>
+  <link rel="stylesheet" href="shared.css"/>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<header>
+  <div class="header-inner">
+    <a class="logo" href="index.html">
+      <img src="logo.jpg" alt="LegalLinguoLab">
+      <div><div class="logo-text">Legal<span>Linguo</span>Lab</div><span class="logo-sub">Образовательная платформа юридического языка</span></div>
+    </a>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    <nav class="header-nav">
+      <a href="index.html">Главная</a>
+      <div class="dropdown"><a href="#">Обучение ▾</a><div class="dropdown-menu">
+        <a href="teoria.html"><span class="dm-icon">📚</span>Теория</a>
+        <a href="praktika.html"><span class="dm-icon">✍️</span>Практика</a>
+        <a href="kontrol.html"><span class="dm-icon">🎯</span>Контроль</a>
+      </div></div>
+      <div class="dropdown"><a href="#" class="active">Материалы ▾</a><div class="dropdown-menu">
+        <a href="literatura.html" class="active"><span class="dm-icon">📖</span>Учебная литература</a>
+        <a href="about.html"><span class="dm-icon">ℹ️</span>О платформе</a>
+      </div></div>
+      <a href="grades.html">📊 Мои оценки</a>
+      <a href="muallif.html">👤 Об авторе</a>
+    </nav>
+    <div id="navUserBlock"></div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">🏠 Главная</a>
+    <div class="mobile-section-label">Обучение</div>
+    <a href="teoria.html">📚 Теория</a>
+    <a href="praktika.html">✍️ Практика</a>
+    <a href="kontrol.html">🎯 Контроль</a>
+    <div class="mobile-section-label">Материалы</div>
+    <a href="literatura.html" class="active">📖 Учебная литература</a>
+    <a href="about.html">ℹ️ О платформе</a>
+    <div class="mobile-section-label">Другое</div>
+    <a href="grades.html">📊 Мои оценки</a>
+    <a href="muallif.html">👤 Об авторе</a>
+    <div id="mobileUserBlock"></div>
+  </div>
+</header>
+
+<div class="page-header">
+  <h1>📖 Учебная литература</h1>
+  <p>8 рекомендованных источников по юридическому языку</p>
+</div>
+
+<div class="main">
+  <div class="info-box blue">📌 Нажмите <strong>Читать</strong> чтобы открыть книгу, или <strong>⬇ Скачать</strong> чтобы сохранить на устройство.</div>
+
+  <div class="file-list" id="fileList"></div>
+</div>
+
+<footer>
+  <div class="footer-logo">⚖️ LegalLinguoLab</div>
+  <p class="footer-text">© 2026 Пулатова У.Р. — Образовательная платформа юридического языка · <a href="https://legallinguolab.uz">legallinguolab.uz</a></p>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closePDF(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <span id="modalTitle">Документ</span>
+      <div class="modal-head-actions">
+        <a class="modal-dl-btn" id="modalDlBtn" href="#" download>⬇ Скачать</a>
+        <button class="modal-close" onclick="closePDF(event)">✕</button>
+      </div>
+    </div>
+    <iframe id="modalFrame" src=""></iframe>
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script>
+const books = [
+  { n:1, color:'navy', author:'Загорский, Качалов', title:'Как составлять процессуальные документы', file:'literatura/1-zagorskiy-kachalov.pdf', size:'1.2 МБ' },
+  { n:2, color:'navy', author:'Ивакина Н.', title:'Учебное пособие по юридическому языку', file:'literatura/2-ivakina.pdf', size:'1.2 МБ' },
+  { n:3, color:'navy', author:'Кашанина', title:'Юридическая техника (2011)', file:'literatura/3-kashanina.pdf', size:'21 МБ' },
+  { n:4, color:'teal', author:'Процессуальные акты', title:'Учебно-методическое пособие (Воронеж)', file:'literatura/4-proc-akty-voronezh.pdf', size:'575 КБ' },
+  { n:5, color:'teal', author:'Процессуальные акты', title:'Досудебное производство', file:'literatura/5-proc-akty-dosudeb.pdf', size:'1.9 МБ' },
+  { n:6, color:'gold', author:'Пулатова У.Р.', title:'Практикум по составлению процессуальных документов (2022)', file:'literatura/6-pulatova.pdf', size:'1.1 МБ' },
+  { n:7, color:'purple', author:'Воронцова, Хорошко', title:'Русский язык для юристов', file:'literatura/7-voroncova-horoshko.pdf', size:'1.1 МБ' },
+  { n:8, color:'purple', author:'Стародубова Г.В.', title:'Уголовно-процессуальные акты (2022, Юрайт)', file:'literatura/8-starodubova.pdf', size:'56 МБ' },
+];
+
+document.getElementById('fileList').innerHTML = books.map(b => `
+  <div class="file-item" onclick="openPDF('${b.file}','${b.author} — ${b.title}')">
+    <div class="file-num ${b.color}">${b.n}</div>
+    <div class="file-info">
+      <h3>${b.author}</h3>
+      <p>${b.title} · ${b.size}</p>
+    </div>
+    <div class="file-actions">
+      <button class="btn-view" onclick="event.stopPropagation();openPDF('${b.file}','${b.author} — ${b.title}')">Читать</button>
+      <a class="btn-dl" href="${b.file}" download onclick="event.stopPropagation()">⬇ Скачать</a>
+    </div>
+  </div>`).join('');
+</script>
+</body>
+</html>
